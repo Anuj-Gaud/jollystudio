@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JollyStudio | Royal Wedding Photography</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ROYAL THEME VARIABLES --- */
+        :root {
+            --primary-burgundy: #4a0e12;
+            --primary-gold: #c5a059;
+            --text-dark: #2c2c2c;
+            --bg-cream: #fffcf7;
+            --bg-distinct: #eae0d5; 
+            --white: #ffffff;
+            --transition: all 0.4s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Great Vibes', cursive; color: var(--primary-burgundy); font-weight: 400; }
+        h4, h5 { font-family: 'Playfair Display', serif; color: var(--primary-burgundy); letter-spacing: 1px; }
+
+        a { text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 120px 0; }
+        
+        .section-title { text-align: center; font-size: 4.5rem; margin-bottom: 0.5rem; line-height: 1.2; }
+        .section-subtitle { text-align: center; color: var(--primary-gold); margin-bottom: 4rem; font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; font-weight: 600; }
+
+        .btn {
+            display: inline-block; padding: 14px 45px; font-size: 0.9rem; 
+            font-family: 'Playfair Display', serif; font-weight: 600;
+            cursor: pointer; transition: var(--transition);
+            text-transform: uppercase; letter-spacing: 2px;
+            border-radius: 50px; 
+        }
+        .btn-primary { 
+            background-color: var(--primary-burgundy); color: var(--primary-gold); 
+            border: 1px solid var(--primary-burgundy);
+            box-shadow: 0 5px 15px rgba(74, 14, 18, 0.3);
+        }
+        .btn-primary:hover { background-color: transparent; color: var(--primary-burgundy); transform: translateY(-3px); }
+        .btn-outline { border: 1px solid var(--primary-burgundy); color: var(--primary-burgundy); background: transparent; }
+        .btn-outline:hover { background: var(--primary-burgundy); color: var(--primary-gold); }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: absolute; top: 0; left: 0; width: 100%;
+            background-color: var(--bg-cream);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000; padding: 15px 0; transition: var(--transition);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--primary-burgundy); line-height: 1; }
+        .logo span { color: var(--primary-gold); }
+
+        .nav-menu { display: flex; gap: 35px; transition: 0.5s cubic-bezier(0.77,0.2,0.05,1.0); }
+
+        .nav-link { 
+            color: var(--text-dark); font-weight: 600; font-size: 0.9rem; 
+            text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 5px;
+        }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--primary-gold); transition: width 0.3s ease; }
+        .nav-link:hover { color: var(--primary-burgundy); }
+        .nav-link:hover::after { width: 100%; }
+
+        .close-btn { display: none; }
+
+        /* --- SIDEBAR MODE (UPDATED: Thinner) --- */
+        .nav-menu.active {
+            position: fixed; top: 0; left: 0;
+            height: 100vh; 
+            width: 260px; /* REDUCED WIDTH */
+            background-color: var(--bg-cream);
+            flex-direction: column;
+            justify-content: center; align-items: center;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.1);
+            z-index: 2000;
+            gap: 40px;
+            animation: slideInLeft 0.4s ease forwards;
+        }
+        .nav-menu.active .close-btn { display: block; position: absolute; top: 20px; left: 20px; cursor: pointer; }
+        @keyframes slideInLeft { from { left: -260px; } to { left: 0; } }
+        
+        .hamburger { display: none; cursor: pointer; font-size: 1.5rem; color: var(--primary-burgundy); }
+
+        .side-tab-trigger {
+            position: fixed; top: 30px; left: 30px; width: 50px; height: 50px;
+            background: var(--primary-burgundy); color: var(--primary-gold);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; cursor: pointer; z-index: 2001; 
+            border: 2px solid var(--primary-gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0; pointer-events: none; transition: 0.4s ease; transform: scale(0.8);
+        }
+        .side-tab-trigger.visible { opacity: 1; pointer-events: all; transform: scale(1); }
+        .side-tab-trigger:hover { transform: scale(1.1); }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(255,252,247,0.3), rgba(255,252,247,0.5)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center; text-align: center; color: var(--primary-burgundy);
+            margin-top: 75px; 
+        }
+        .hero-content h1 { font-size: 6.5rem; margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(255,255,255,0.8); line-height: 1.1; }
+        .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; font-family: 'Playfair Display', serif; letter-spacing: 1px; font-style: italic; color: var(--text-dark); }
+
+        /* --- SERVICES --- */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        a.service-card {
+            display: block; text-decoration: none; color: inherit;
+            background: var(--white); padding: 50px 25px; text-align: center;
+            border-radius: 200px 200px 10px 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        a.service-card:hover { transform: translateY(-10px); border-color: var(--primary-gold); background: #fffdf9; box-shadow: 0 15px 40px rgba(74, 14, 18, 0.1); }
+        .service-icon { font-size: 2.2rem; color: var(--primary-burgundy); margin-bottom: 20px; }
+        .service-card h3 { font-size: 2.5rem; margin-bottom: 15px; font-family: 'Great Vibes', cursive; }
+
+        /* --- GALLERY --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .gallery-item {
+            position: relative; overflow: hidden; height: 400px; cursor: pointer;
+            border-radius: 200px 200px 10px 10px;
+            border: 1px solid var(--primary-gold);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        
+        /* --- CONTACT --- */
+        .contact-container { display: flex; flex-wrap: wrap; gap: 60px; }
+        .contact-info, .contact-form-wrapper { flex: 1; min-width: 300px; }
+        .contact-icon { width: 55px; height: 55px; background: var(--bg-cream); border: 1px solid var(--primary-burgundy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-burgundy); font-size: 1.3rem; margin-right: 20px; }
+        .form-control { width: 100%; padding: 15px; border: 1px solid #e0d0b8; background-color: var(--white); font-family: 'Playfair Display', serif; margin-bottom: 20px; border-radius: 4px; }
+        
+        .float-wa { position: fixed; width: 65px; height: 65px; bottom: 35px; right: 35px; background-color: var(--primary-burgundy); color: var(--white); border-radius: 50%; font-size: 32px; box-shadow: 0 5px 20px rgba(74, 14, 18, 0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; border: 2px solid var(--primary-gold); }
+
+        @media (max-width: 768px) {
+            .navbar { position: absolute; } 
+            .nav-menu { display: none; } 
+            .nav-menu.active { display: flex; } 
+            .hamburger { display: block; }
+            .side-tab-trigger { display: flex; } 
+            
+            .hero-content h1 { font-size: 4rem; }
+            .section-title { font-size: 3.5rem; }
+            .contact-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="side-tab-trigger">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">Jolly<span>Studio</span></a>
+            <div class="hamburger"><i class="fas fa-bars"></i></div>
+            <ul class="nav-menu">
+                <li class="close-btn" onclick="toggleMenu()">
+                    <i class="fas fa-times" style="font-size: 1.5rem; color: var(--primary-burgundy);"></i>
+                </li>
+                <li><a href="#home" class="nav-link" onclick="toggleMenu()">Home</a></li>
+                <li><a href="#about" class="nav-link" onclick="toggleMenu()">About</a></li>
+                <li><a href="#services" class="nav-link" onclick="toggleMenu()">Services</a></li>
+                <li><a href="#gallery" class="nav-link" onclick="toggleMenu()">Gallery</a></li>
+                <li><a href="#contact" class="nav-link" onclick="toggleMenu()">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content container">
+            <h1>Moments of Love</h1>
+            <p>Capturing your fairytale with royal elegance and timeless grace.</p>
+            <a href="#contact" class="btn btn-primary">Book Your Date</a>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">The Artist's Soul</h2>
+            <p class="section-subtitle">Est. 2025 • Mumbai</p>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 60px;">
+                <div style="flex: 1; min-width: 300px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Photographer" style="border-radius: 200px 200px 10px 10px; border: 2px solid var(--primary-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1;">Weaving Memories</h3>
+                    <p style="margin-bottom: 25px; font-size: 1.05rem; color: #555;">We believe every love story deserves to be told like a royal legend. Our approach blends candid emotion with high-fashion editorial aesthetics.</p>
+                    <div style="display: flex; gap: 40px; margin-top: 30px; border-top: 1px solid #e0d0b8; padding-top: 30px;">
+                        <div><h4 style="color: var(--primary-burgundy); font-size: 2rem;">150+</h4><p style="font-size: 0.8rem; text-transform: uppercase; color: var(--primary-gold);">Weddings</p></div>
+                        <div><h4 style="color: var(--primary-burgundy); font-size: 2rem;">Global</h4><p style="font-size: 0.8rem; text-transform: uppercase; color: var(--primary-gold);">Availability</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding" style="background-color: var(--bg-distinct);">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Select a service to view the gallery</p>
+            <div class="services-grid">
+                <a href="Engagement.html" class="service-card">
+                    <h3>Engagement</h3>
+                    <p>Cinematic shoots at exotic locations.</p>
+                </a>
+                <a href="Prewedding&Wedding.html" class="service-card">
+                    <h3>PreWedding</h3>
+                    <p>Full event coverage & rituals.</p>
+                </a>
+                <a href="Wedding.html" class="service-card">
+                    <h3>The Wedding</h3>
+                    <p>Full event coverage & rituals.</p>
+                </a>
+                <a href="Maternity&Baby.html" class="service-card">
+                    <h3>Maternity</h3>
+                    <p>Gentle, artistic parenthood portraits.</p>
+                </a>
+                <a href="Baby.html" class="service-card">
+                    <h3>Baby shoots</h3>
+                    <p>Gentle, artistic parenthood portraits.</p>
+                </a>
+                <a href="Portfolio.html" class="service-card">
+                    <h3>Portraits</h3>
+                    <p>Professional modeling portfolios.</p>
+                </a>
+                <a href="product.html" class="service-card">
+                    <h3>Products</h3>
+                    <p>Professional product designing.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Visual Poetry</h2>
+            <p class="section-subtitle">Highlights from recent celebrations</p>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bride"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ceremony"></div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="gallery.html" class="btn btn-outline">Enter Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding" style="background-color: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Begin Your Journey</h2>
+            <p class="section-subtitle">We would be honored to tell your story</p>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1.1;">Mumbai & Worldwide</h3>
+                    <p style="margin-bottom: 40px; color: #666; font-size: 1.1rem;">We are accepting bookings for the upcoming season. Fill out the form to chat with us directly on WhatsApp.</p>
+                    <div style="display: flex; align-items: center; margin-bottom: 30px;">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem;">WhatsApp</h4><p style="margin: 0; color: #777;">+91 98202 93428</p></div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form id="whatsappForm">
+                        <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                        <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                        <select id="serviceType" class="form-control" style="color: #666;">
+                            <option value="Wedding">Wedding</option>
+                            <option value="Pre-Wedding">Pre-Wedding</option>
+                            <option value="Maternity">Maternity</option>
+                            <option value="Portfolio">Portfolio</option>
+                        </select>
+                        <textarea id="message" class="form-control" rows="4" placeholder="Tell us about your event..."></textarea>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background-color: var(--primary-burgundy); color: var(--bg-cream); padding: 70px 0; text-align: center;">
+        <div class="container">
+            <h2 class="logo" style="color: var(--white); margin-bottom: 20px;">Jolly<span>Studio</span></h2>
+            <p style="opacity: 0.8; font-size: 0.9rem;">&copy; 2025 JollyStudio. Crafted with Love.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919820293428" class="float-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        const navMenu = document.querySelector('.nav-menu');
+        const sideTabTrigger = document.querySelector('.side-tab-trigger');
+        const hamburger = document.querySelector('.hamburger');
+
+        function toggleMenu() {
+            navMenu.classList.toggle('active');
+        }
+
+        sideTabTrigger.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevents immediate closing
+            toggleMenu();
+        });
+
+        hamburger.addEventListener('click', function(event) {
+            event.stopPropagation();
+            toggleMenu();
+        });
+
+        // Close Menu When Clicking Outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navMenu.contains(event.target);
+            const isClickOnTrigger = sideTabTrigger.contains(event.target) || hamburger.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnTrigger && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Show/Hide Side Tab logic
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                sideTabTrigger.classList.add('visible');
+            } else {
+                sideTabTrigger.classList.remove('visible');
+            }
+        });
+
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const service = document.getElementById('serviceType').value;
+            const message = document.getElementById('message').value;
+            window.open(`https://wa.me/919820293428?text=*New Inquiry from Website*%0a%0a*Name:* ${name}%0a*Service:* ${service}%0a*Message:* ${message}`, '_blank').focus();
+        });
+    </script>
+</body>
+</html>

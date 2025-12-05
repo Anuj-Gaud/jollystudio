@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prewedding | JollyStudio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-burgundy: #4a0e12;
+            --primary-gold: #c5a059;
+            --text-dark: #2c2c2c;
+            --bg-cream: #fffcf7;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Playfair Display', serif; background: var(--bg-cream); color: var(--text-dark); }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .page-header { background: var(--white); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 50px; }
+        .header-flex { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-size: 2.2rem; font-family: 'Great Vibes', cursive; color: var(--primary-burgundy); }
+        .logo span { color: var(--primary-gold); }
+        
+        .back-btn { color: var(--primary-burgundy); font-weight: 600; display: flex; align-items: center; gap: 8px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .back-btn:hover { color: var(--primary-gold); }
+
+        .gallery-title { text-align: center; margin-bottom: 5px; font-size: 5rem; font-family: 'Great Vibes', cursive; color: var(--primary-burgundy); line-height: 1.2; }
+        .gallery-subtitle { text-align: center; margin-bottom: 50px; color: var(--primary-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; }
+        
+        /* --- ARCH IMAGE GRID --- */
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
+        
+        .photo-card {
+            /* THE ARCH SHAPE FROM YOUR IMAGE */
+            border-radius: 200px 200px 10px 10px;
+            overflow: hidden; 
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            transition: transform 0.4s ease;
+            border: 1px solid var(--primary-gold);
+            height: 450px; /* Fixed height is important for the arch to look good */
+            background: var(--white);
+        }
+        
+        .photo-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(74, 14, 18, 0.15); }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        .float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--primary-burgundy); color: var(--white); border-radius: 50%; font-size: 30px; display: flex; align-items: center; justify-content: center; z-index: 100; border: 2px solid var(--primary-gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .float-wa:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <div class="container header-flex">
+            <a href="index.html" class="logo">Jolly<span>Studio</span></a>
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="gallery-title">Prewedding</h1>
+        <p class="gallery-subtitle">Timeless Memories</p>
+        
+        <div class="photo-grid">
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Image 1"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Image 2"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1522673607200-1645062cd958?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Image 3"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Image 4"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1621621667797-e06afc217fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Image 5"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Image 6"></div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/919820293428" class="float-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+</body>
+</html>
