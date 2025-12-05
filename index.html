@@ -14,7 +14,7 @@
             --primary-gold: #c5a059;
             --text-dark: #2c2c2c;
             --bg-cream: #fffcf7;
-            --bg-distinct: #eae0d5; 
+            --bg-distinct: #eae0d5; /* Warm Taupe for Services */
             --white: #ffffff;
             --transition: all 0.4s ease;
         }
@@ -38,11 +38,12 @@
         img { max-width: 100%; height: auto; display: block; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section-padding { padding: 120px 0; }
+        .section-padding { padding: 120px 0; } /* Spacious Royal Padding */
         
         .section-title { text-align: center; font-size: 4.5rem; margin-bottom: 0.5rem; line-height: 1.2; }
         .section-subtitle { text-align: center; color: var(--primary-gold); margin-bottom: 4rem; font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; font-weight: 600; }
 
+        /* Buttons */
         .btn {
             display: inline-block; padding: 14px 45px; font-size: 0.9rem; 
             font-family: 'Playfair Display', serif; font-weight: 600;
@@ -59,22 +60,26 @@
         .btn-outline { border: 1px solid var(--primary-burgundy); color: var(--primary-burgundy); background: transparent; }
         .btn-outline:hover { background: var(--primary-burgundy); color: var(--primary-gold); }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR (Solid Background, Thinner) --- */
         .navbar {
-            position: absolute; top: 0; left: 0; width: 100%;
-            background-color: var(--bg-cream);
+            position: absolute; /* Scrolls away with page */
+            top: 0; left: 0; width: 100%;
+            background-color: var(--bg-cream); /* Solid Cream Background */
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            z-index: 1000; padding: 15px 0; transition: var(--transition);
+            z-index: 1000;
+            padding: 8px 0; /* Thinner padding */
+            transition: var(--transition);
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         
-        .logo { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--primary-burgundy); line-height: 1; }
+        .logo { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--primary-burgundy); line-height: 1; }
         .logo span { color: var(--primary-gold); }
 
         .nav-menu { display: flex; gap: 35px; transition: 0.5s cubic-bezier(0.77,0.2,0.05,1.0); }
 
+        /* Hover Effect: Gold Underline */
         .nav-link { 
-            color: var(--text-dark); font-weight: 600; font-size: 0.9rem; 
+            color: var(--text-dark); font-weight: 600; font-size: 0.85rem; 
             text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 5px;
         }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--primary-gold); transition: width 0.3s ease; }
@@ -83,11 +88,10 @@
 
         .close-btn { display: none; }
 
-        /* --- SIDEBAR MODE (UPDATED: Thinner) --- */
+        /* --- SIDEBAR MODE (Left Side, Thinner) --- */
         .nav-menu.active {
-            position: fixed; top: 0; left: 0;
-            height: 100vh; 
-            width: 260px; /* REDUCED WIDTH */
+            position: fixed; top: 0; left: 0; /* Left side */
+            height: 100vh; width: 260px; /* Thinner width */
             background-color: var(--bg-cream);
             flex-direction: column;
             justify-content: center; align-items: center;
@@ -101,8 +105,10 @@
         
         .hamburger { display: none; cursor: pointer; font-size: 1.5rem; color: var(--primary-burgundy); }
 
+        /* --- SIDE TAB TRIGGER (Left Side) --- */
         .side-tab-trigger {
-            position: fixed; top: 30px; left: 30px; width: 50px; height: 50px;
+            position: fixed; top: 25px; left: 25px;
+            width: 50px; height: 50px;
             background: var(--primary-burgundy); color: var(--primary-gold);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; cursor: pointer; z-index: 2001; 
@@ -116,32 +122,61 @@
         /* --- HERO --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(255,252,247,0.3), rgba(255,252,247,0.5)), url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover; background-position: center; background-attachment: fixed;
+            position: relative;
             display: flex; align-items: center; justify-content: center; text-align: center; color: var(--primary-burgundy);
-            margin-top: 75px; 
+            margin-top: 65px; /* Offset for navbar */
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255,252,247,0.3), rgba(255,252,247,0.5));
+            z-index: 2;
+            pointer-events: none;
+        }
+        .hero video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
         }
         .hero-content h1 { font-size: 6.5rem; margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(255,255,255,0.8); line-height: 1.1; }
         .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; font-family: 'Playfair Display', serif; letter-spacing: 1px; font-style: italic; color: var(--text-dark); }
 
-        /* --- SERVICES --- */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        /* --- SERVICES (Animated & Arch) --- */
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
         a.service-card {
             display: block; text-decoration: none; color: inherit;
             background: var(--white); padding: 50px 25px; text-align: center;
-            border-radius: 200px 200px 10px 10px; 
+            border-radius: 200px 200px 10px 10px; /* Arch Shape */
             box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition);
             border: 1px solid rgba(197, 160, 89, 0.2);
         }
         a.service-card:hover { transform: translateY(-10px); border-color: var(--primary-gold); background: #fffdf9; box-shadow: 0 15px 40px rgba(74, 14, 18, 0.1); }
-        .service-icon { font-size: 2.2rem; color: var(--primary-burgundy); margin-bottom: 20px; }
+        .service-icon { font-size: 2.5rem; color: var(--primary-burgundy); margin-bottom: 20px; transition: 0.3s; }
         .service-card h3 { font-size: 2.5rem; margin-bottom: 15px; font-family: 'Great Vibes', cursive; }
 
-        /* --- GALLERY --- */
+        /* --- ICON ANIMATIONS --- */
+        @keyframes cameraFlash { 0%, 100% { transform: scale(1); text-shadow: none; } 50% { transform: scale(1.1); text-shadow: 0 0 15px rgba(197, 160, 89, 0.8); } }
+        @keyframes ringWiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
+        @keyframes rockBaby { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+        @keyframes floatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        .service-card:hover .fa-camera-retro { animation: cameraFlash 1.5s infinite; }
+        .service-card:hover .fa-ring { animation: ringWiggle 1s infinite; }
+        .service-card:hover .fa-baby { animation: rockBaby 2s infinite ease-in-out; }
+        .service-card:hover .fa-crop-simple, .service-card:hover .fa-mug-hot { animation: floatUp 2s infinite ease-in-out; }
+
+        /* --- GALLERY (Arch Images) --- */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .gallery-item {
             position: relative; overflow: hidden; height: 400px; cursor: pointer;
-            border-radius: 200px 200px 10px 10px;
+            border-radius: 200px 200px 10px 10px; /* Arch Shape */
             border: 1px solid var(--primary-gold);
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
@@ -162,23 +197,33 @@
             .nav-menu.active { display: flex; } 
             .hamburger { display: block; }
             .side-tab-trigger { display: flex; } 
-            
             .hero-content h1 { font-size: 4rem; }
             .section-title { font-size: 3.5rem; }
             .contact-container { flex-direction: column; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            a.service-card { padding: 35px 20px; }
+            .service-card h3 { font-size: 2rem; }
+            .service-card p { font-size: 0.9rem; }
+            .service-icon { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Side Tab Trigger (Appears on Scroll) -->
     <div class="side-tab-trigger">
         <i class="fas fa-bars"></i>
     </div>
 
+    <!-- Main Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">Jolly<span>Studio</span></a>
+            
+            <!-- Mobile Toggle -->
             <div class="hamburger"><i class="fas fa-bars"></i></div>
+
+            <!-- Menu Links -->
             <ul class="nav-menu">
                 <li class="close-btn" onclick="toggleMenu()">
                     <i class="fas fa-times" style="font-size: 1.5rem; color: var(--primary-burgundy);"></i>
@@ -193,6 +238,10 @@
     </nav>
 
     <section id="home" class="hero">
+        <video autoplay muted loop playsinline>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div class="hero-content container">
             <h1>Moments of Love</h1>
             <p>Capturing your fairytale with royal elegance and timeless grace.</p>
@@ -220,36 +269,46 @@
         </div>
     </section>
 
+    <!-- Services Section with Distinct Background -->
     <section id="services" class="section-padding" style="background-color: var(--bg-distinct);">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
+            <h2 class="section-title">Our Collections</h2>
             <p class="section-subtitle">Select a service to view the gallery</p>
+            
             <div class="services-grid">
+                <!-- Engagement -->
                 <a href="Engagement.html" class="service-card">
+                    <i class="fas fa-ring service-icon"></i>
                     <h3>Engagement</h3>
-                    <p>Cinematic shoots at exotic locations.</p>
+                    <p>Capturing the promise of forever.</p>
                 </a>
-                <a href="Prewedding&Wedding.html" class="service-card">
-                    <h3>PreWedding</h3>
-                    <p>Full event coverage & rituals.</p>
+                <!-- Pre-Wedding -->
+                <a href="PreWedding.html" class="service-card">
+                    <i class="fas fa-heart service-icon"></i>
+                    <h3>Pre-Wedding</h3>
+                    <p>Capturing your love before the big day.</p>
                 </a>
+                <!-- Wedding -->
                 <a href="Wedding.html" class="service-card">
+                    <i class="fas fa-camera-retro service-icon"></i>
                     <h3>The Wedding</h3>
                     <p>Full event coverage & rituals.</p>
                 </a>
-                <a href="Maternity&Baby.html" class="service-card">
+                <!-- Maternity -->
+                <a href="Maternity.html" class="service-card">
+                    <i class="fas fa-baby-carriage service-icon"></i>
                     <h3>Maternity</h3>
                     <p>Gentle, artistic parenthood portraits.</p>
                 </a>
+                <!-- Baby Shoot -->
                 <a href="Baby.html" class="service-card">
+                    <i class="fas fa-baby service-icon"></i>
                     <h3>Baby shoots</h3>
-                    <p>Gentle, artistic parenthood portraits.</p>
+                    <p>Tiny toes and precious smiles.</p>
                 </a>
-                <a href="Portfolio.html" class="service-card">
-                    <h3>Portraits</h3>
-                    <p>Professional modeling portfolios.</p>
-                </a>
+            <!-- Products -->
                 <a href="product.html" class="service-card">
+                    <i class="fas fa-mug-hot service-icon"></i>
                     <h3>Products</h3>
                     <p>Professional product designing.</p>
                 </a>
@@ -316,13 +375,15 @@
         const navMenu = document.querySelector('.nav-menu');
         const sideTabTrigger = document.querySelector('.side-tab-trigger');
         const hamburger = document.querySelector('.hamburger');
+        const closeBtn = document.querySelector('.close-btn');
 
         function toggleMenu() {
             navMenu.classList.toggle('active');
         }
 
+        // Click on buttons to toggle
         sideTabTrigger.addEventListener('click', function(event) {
-            event.stopPropagation(); // Prevents immediate closing
+            event.stopPropagation();
             toggleMenu();
         });
 
@@ -331,17 +392,23 @@
             toggleMenu();
         });
 
-        // Close Menu When Clicking Outside
+        closeBtn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            navMenu.classList.remove('active');
+        });
+
+        // Click OUTSIDE menu to close
         document.addEventListener('click', function(event) {
             const isClickInsideMenu = navMenu.contains(event.target);
             const isClickOnTrigger = sideTabTrigger.contains(event.target) || hamburger.contains(event.target);
 
-            if (!isClickInsideMenu && !isClickOnTrigger && navMenu.classList.contains('active')) {
+            // If menu is open AND click is NOT inside menu AND click is NOT on trigger button
+            if (navMenu.classList.contains('active') && !isClickInsideMenu && !isClickOnTrigger) {
                 navMenu.classList.remove('active');
             }
         });
 
-        // Show/Hide Side Tab logic
+        // Show Side Button on Scroll
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 sideTabTrigger.classList.add('visible');
