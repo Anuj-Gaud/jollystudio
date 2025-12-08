@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PreWedding Gallery | JollyStudio</title>
+    <title>Maternity Gallery | JollyStudio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
@@ -28,7 +28,7 @@
         .back-btn { color: var(--primary-burgundy); font-weight: 600; display: flex; align-items: center; gap: 8px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
 
         /* Left Side Tab */
-        .side-tab-trigger {
+        .side-menu-trigger {
             position: fixed; top: 20px; left: 20px; width: 45px; height: 45px;
             background: var(--primary-burgundy); color: var(--primary-gold);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -36,32 +36,45 @@
             border: 2px solid var(--primary-gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: 0.4s ease;
         }
-        .side-tab-trigger:hover { transform: scale(1.1); }
+        .side-menu-trigger:hover { transform: scale(1.1); }
 
-        /* Left Sidebar Menu (THINNER) */
-        .nav-menu {
-            position: fixed; top: 0; left: -260px; height: 100vh; width: 260px;
+        /* Left Sidebar Menu */
+        .side-menu {
+            position: fixed; top: 0; left: -280px; height: 100vh; width: 280px;
             background-color: var(--bg-cream); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; box-shadow: 5px 0 30px rgba(0,0,0,0.1);
-            z-index: 2000; gap: 30px; transition: 0.4s ease;
+            z-index: 2000; box-shadow: 5px 0 30px rgba(0,0,0,0.1);
+            transition: left 0.4s ease; padding-top: 60px;
         }
-        .nav-menu.active { left: 0; }
-        .nav-link { font-size: 1.1rem; text-transform: uppercase; color: var(--text-dark); font-weight: 600; position: relative; padding-bottom: 5px; }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--primary-gold); transition: width 0.3s ease; }
-        .nav-link:hover { color: var(--primary-burgundy); }
-        .nav-link:hover::after { width: 100%; }
+        .side-menu.visible { left: 0; }
+        .side-menu-logo {
+            text-align: center; margin-bottom: 40px;
+            font-family: 'Great Vibes', cursive; font-size: 1.6rem;
+            color: var(--primary-burgundy); line-height: 1;
+        }
+        .side-menu-logo span { color: var(--primary-gold); }
+        .side-menu ul { display: flex; flex-direction: column; gap: 30px; align-items: center; list-style: none; }
+        .side-menu .nav-link { font-size: 1.1rem; text-transform: uppercase; color: var(--text-dark); font-weight: 600; position: relative; padding-bottom: 5px; }
+        .side-menu .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--primary-gold); transition: width 0.3s ease; }
+        .side-menu .nav-link:hover { color: var(--primary-burgundy); }
+        .side-menu .nav-link:hover::after { width: 100%; }
+        .side-menu .close-btn { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 1.5rem; color: var(--primary-burgundy); background: none; border: none; padding: 0; }
         
         .gallery-title { text-align: center; margin-bottom: 5px; font-size: 5rem; font-family: 'Great Vibes', cursive; color: var(--primary-burgundy); line-height: 1.2; }
         .gallery-subtitle { text-align: center; margin-bottom: 50px; color: var(--primary-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; }
         
         .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
         .photo-card {
-            border-radius: 200px 200px 10px 10px; overflow: hidden; position: relative;
+            border-radius: 12px; overflow: hidden; position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: transform 0.4s ease;
             border: 1px solid var(--primary-gold); height: 450px; background: var(--white);
         }
         .photo-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(74, 14, 18, 0.15); }
-        .photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
+
+        /* Lightbox */
+        .lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:3000; opacity:0; pointer-events:none; transition:opacity 0.25s ease; }
+        .lightbox.visible { opacity:1; pointer-events:auto; }
+        .lightbox img { max-width:90%; max-height:90%; border-radius:8px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         
         .float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--primary-burgundy); color: var(--white); border-radius: 50%; font-size: 30px; display: flex; align-items: center; justify-content: center; z-index: 100; border: 2px solid var(--primary-gold); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .float-wa:hover { transform: scale(1.1); }
@@ -69,18 +82,22 @@
 </head>
 <body>
 
-    <div class="side-tab-trigger">
+    <div class="side-menu-trigger">
         <i class="fas fa-bars"></i>
     </div>
 
-    <ul class="nav-menu">
-        <li style="position: absolute; top: 20px; left: 20px; cursor: pointer;" class="close-btn">
-            <i class="fas fa-times" style="font-size: 1.5rem; color: var(--primary-burgundy);"></i>
-        </li>
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="index.html#services" class="nav-link">Services</a></li>
-        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
-    </ul>
+    <div class="side-menu">
+        <button class="close-btn" onclick="toggleSideMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="side-menu-logo">Jolly<span>Studio</span></div>
+        <ul>
+            <li><a href="index.html" class="nav-link" onclick="toggleSideMenu()">Home</a></li>
+            <li><a href="index.html#services" class="nav-link" onclick="toggleSideMenu()">Services</a></li>
+            <li><a href="index.html#gallery" class="nav-link" onclick="toggleSideMenu()">Gallery</a></li>
+            <li><a href="index.html#contact" class="nav-link" onclick="toggleSideMenu()">Contact</a></li>
+        </ul>
+    </div>
 
     <header class="page-header">
         <div class="container header-flex">
@@ -91,47 +108,72 @@
 
     <div class="container">
         <!-- Change Title Below -->
-        <h1 class="gallery-title">Pre-Wedding</h1>
-        <p class="gallery-subtitle">Captured moments of love before the big day</p>
+        <h1 class="gallery-title">The Maternity</h1>
+        <p class="gallery-subtitle"> Complete event coverage capturing every precious ritual and emotion</p>
         
         <div class="photo-grid">
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PreWedding 1"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PreWedding 2"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1522673607200-1645062cd958?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PreWedding 3"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PreWedding 4"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1621621667797-e06afc217fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PreWedding 5"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="PreWedding 6"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity 1"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity 2"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity 3"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1522673607200-1645062cd958?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity 4"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity 5"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity 6"></div>
         </div>
     </div>
 
     <a href="https://wa.me/919820293428" class="float-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <script>
-        const navMenu = document.querySelector('.nav-menu');
-        const sideTabTrigger = document.querySelector('.side-tab-trigger');
-        const closeBtn = document.querySelector('.close-btn');
+        const sideMenu = document.querySelector('.side-menu');
+        const sideMenuTrigger = document.querySelector('.side-menu-trigger');
 
-        function toggleMenu() {
-            navMenu.classList.toggle('active');
+        function toggleSideMenu() {
+            if(sideMenu) sideMenu.classList.toggle('visible');
         }
 
-        sideTabTrigger.addEventListener('click', function(event) {
-            event.stopPropagation();
-            toggleMenu();
-        });
+        window.toggleSideMenu = toggleSideMenu;
 
-        closeBtn.addEventListener('click', function(event) {
+        if(sideMenuTrigger) sideMenuTrigger.addEventListener('click', function(event) {
             event.stopPropagation();
-            navMenu.classList.remove('active');
+            toggleSideMenu();
         });
 
         document.addEventListener('click', function(event) {
-            const isClickInsideMenu = navMenu.contains(event.target);
-            const isClickOnTrigger = sideTabTrigger.contains(event.target);
-            if (!isClickInsideMenu && !isClickOnTrigger && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
+            if(!sideMenu) return;
+            const isClickInsideMenu = sideMenu.contains(event.target);
+            const isClickOnTrigger = sideMenuTrigger && sideMenuTrigger.contains(event.target);
+            if (sideMenu.classList.contains('visible') && !isClickInsideMenu && !isClickOnTrigger) {
+                sideMenu.classList.remove('visible');
             }
         });
+
+        // Lightbox behavior for gallery images
+        (function() {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = '<img src="" alt="Lightbox image" />';
+            document.body.appendChild(lightbox);
+
+            const lbImage = lightbox.querySelector('img');
+
+            document.querySelectorAll('.photo-card img').forEach(img => {
+                img.addEventListener('click', () => {
+                    lbImage.src = img.src;
+                    lightbox.classList.add('visible');
+                });
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target === lbImage) {
+                    lightbox.classList.remove('visible');
+                    lbImage.src = '';
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') { lightbox.classList.remove('visible'); lbImage.src = ''; }
+            });
+        })();
     </script>
 </body>
 </html>
