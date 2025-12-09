@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product  | JollyStudio</title>
+    <title>Product Gallery | JollyStudio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <style>
+    <script src="dynamic-padding.js"></script>
+    <link rel="stylesheet" href="layouts.css"> <style>
+        
         :root {
             --primary-burgundy: #4a0e12;
             --primary-gold: #c5a059;
@@ -62,14 +63,98 @@
         .gallery-title { text-align: center; margin-bottom: 5px; font-size: 5rem; font-family: 'Great Vibes', cursive; color: var(--primary-burgundy); line-height: 1.2; }
         .gallery-subtitle { text-align: center; margin-bottom: 50px; color: var(--primary-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; }
         
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
-        .photo-card {
-            border-radius: 12px; overflow: hidden; position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: transform 0.4s ease;
-            border: 1px solid var(--primary-gold); height: 450px; background: var(--white);
+        .photo-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 250px;
+            gap: 20px;
+            padding: 20px 0;
         }
-        .photo-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(74, 14, 18, 0.15); }
-        .photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
+        
+        .photo-card {
+            border-radius: 20px; 
+            overflow: hidden; 
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12); 
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 2px solid var(--primary-gold); 
+            background: var(--white);
+            cursor: pointer;
+        }
+        
+        .photo-card:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+        .photo-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+        .photo-card:nth-child(3) { grid-column: 2; grid-row: 2; }
+        .photo-card:nth-child(4) { grid-column: 1; grid-row: 3; }
+        .photo-card:nth-child(5) { grid-column: 2; grid-row: 3 / span 2; }
+        .photo-card:nth-child(6) { grid-column: 1; grid-row: 4 / span 2; }
+        
+        .photo-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 40px rgba(74, 14, 18, 0.2); 
+        }
+        .photo-card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+            border-radius: inherit; 
+            transition: transform 0.4s ease;
+        }
+        .photo-card:hover img { transform: scale(1.05); }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .photo-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 200px;
+                gap: 12px;
+                padding: 15px 0;
+            }
+            .photo-card:nth-child(1) { grid-column: 1; grid-row: auto; }
+            .photo-card:nth-child(2) { grid-column: 2; grid-row: auto; }
+            .photo-card:nth-child(3) { grid-column: 1; grid-row: auto; }
+            .photo-card:nth-child(4) { grid-column: 2; grid-row: auto; }
+            .photo-card:nth-child(5) { grid-column: 1; grid-row: auto; }
+            .photo-card:nth-child(6) { grid-column: 2; grid-row: auto; }
+            .photo-card { border-radius: 14px; }
+            .gallery-title { font-size: 2rem; }
+            .gallery-subtitle { font-size: 0.65rem; margin-bottom: 25px; }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .photo-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 220px;
+                gap: 18px;
+            }
+            .photo-card:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+            .photo-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+            .photo-card:nth-child(3) { grid-column: 2; grid-row: 2; }
+            .photo-card:nth-child(4) { grid-column: 1; grid-row: 3; }
+            .photo-card:nth-child(5) { grid-column: 2; grid-row: 3 / span 2; }
+            .photo-card:nth-child(6) { grid-column: 1; grid-row: 4 / span 2; }
+            .gallery-title { font-size: 3rem; }
+            .gallery-subtitle { font-size: 0.75rem; margin-bottom: 35px; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .photo-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 260px;
+                gap: 22px;
+            }
+            .gallery-title { font-size: 3.8rem; }
+        }
+
+        @media (min-width: 1025px) {
+            .photo-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 280px;
+                gap: 25px;
+            }
+            .gallery-title { font-size: 4.5rem; }
+        }
 
         /* Lightbox */
         .lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; z-index:3000; opacity:0; pointer-events:none; transition:opacity 0.25s ease; }
@@ -109,7 +194,7 @@
     <div class="container">
         <!-- Change Title Below -->
         <h1 class="gallery-title">Product</h1>
-        <p class="gallery-subtitle">Transform your favorite photos into keepsake products.</p>
+        <p class="gallery-subtitle">Capturing the promise of forever.</p>
         
         <div class="photo-grid">
             <div class="photo-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Product 1"></div>
@@ -123,6 +208,7 @@
 
     <a href="https://wa.me/919820293428" class="float-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
+    <script src="dynamic-padding.js"></script>
     <script>
         const sideMenu = document.querySelector('.side-menu');
         const sideMenuTrigger = document.querySelector('.side-menu-trigger');
