@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engagement Engagement | JollyStudio</title>
+    <title>Gallery Gallery | JollyStudio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
@@ -21,15 +21,32 @@
         
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
+        /* Add padding to body to account for fixed header */
+        body {
+            padding-top: 100px;
+        }
+        
+        /* Extra top padding for gallery content */
+        .gallery-title {
+            padding-top: 20px;
+        }
+        
         /* UPDATED HEADER WITH NAVIGATION */
         .page-header { 
             background: var(--bg-cream); 
             padding: 20px 0; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
             margin-bottom: 30px; 
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100; 
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            transform: translateY(0);
+        }
+        .page-header.hidden {
+            transform: translateY(-100%);
         }
         .header-flex { 
             display: flex; 
@@ -163,7 +180,7 @@
             padding: 0; 
         }
         
-        .Engagement-title { 
+        .gallery-title { 
             text-align: center; 
             margin-bottom: 10px; 
             font-size: 5rem; 
@@ -171,7 +188,7 @@
             color: var(--primary-burgundy); 
             line-height: 1.2; 
         }
-        .Engagement-subtitle { 
+        .gallery-subtitle { 
             text-align: center; 
             margin-bottom: 25px; 
             color: var(--primary-gold); 
@@ -251,8 +268,8 @@
             .photo-card:nth-child(5) { grid-column: 1; grid-row: auto; }
             .photo-card:nth-child(6) { grid-column: 2; grid-row: auto; }
             .photo-card { border-radius: 14px; }
-            .Engagement-title { font-size: 2rem; }
-            .Engagement-subtitle { font-size: 0.65rem; margin-bottom: 25px; }
+            .gallery-title { font-size: 2rem; }
+            .gallery-subtitle { font-size: 0.65rem; margin-bottom: 25px; }
         }
 
         @media (min-width: 481px) and (max-width: 768px) {
@@ -267,8 +284,8 @@
             .photo-card:nth-child(4) { grid-column: 1; grid-row: 3; }
             .photo-card:nth-child(5) { grid-column: 2; grid-row: 3 / span 2; }
             .photo-card:nth-child(6) { grid-column: 1; grid-row: 4 / span 2; }
-            .Engagement-title { font-size: 3rem; }
-            .Engagement-subtitle { font-size: 0.75rem; margin-bottom: 35px; }
+            .gallery-title { font-size: 3rem; }
+            .gallery-subtitle { font-size: 0.75rem; margin-bottom: 35px; }
         }
 
         @media (min-width: 769px) and (max-width: 1024px) {
@@ -277,7 +294,7 @@
                 grid-auto-rows: 260px;
                 gap: 22px;
             }
-            .Engagement-title { font-size: 3.8rem; }
+            .gallery-title { font-size: 3.8rem; }
         }
 
         @media (min-width: 1025px) {
@@ -286,7 +303,7 @@
                 grid-auto-rows: 280px;
                 gap: 25px;
             }
-            .Engagement-title { font-size: 4.5rem; }
+            .gallery-title { font-size: 4.5rem; }
         }
 
         /* Lightbox */
@@ -349,7 +366,7 @@
         <ul>
             <li><a href="index.html" class="nav-link" onclick="toggleSideMenu()">Home</a></li>
             <li><a href="index.html#services" class="nav-link" onclick="toggleSideMenu()">Services</a></li>
-            <li><a href="index.html#Engagement" class="nav-link" onclick="toggleSideMenu()">Engagement</a></li>
+            <li><a href="index.html#gallery" class="nav-link" onclick="toggleSideMenu()">Gallery</a></li>
             <li><a href="index.html#contact" class="nav-link" onclick="toggleSideMenu()">Contact</a></li>
         </ul>
     </div>
@@ -363,23 +380,23 @@
             <nav class="desktop-nav">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="index.html#services" class="nav-link">Services</a>
-                <a href="index.html#Engagement" class="nav-link">Engagement</a>
+                <a href="index.html#gallery" class="nav-link">Gallery</a>
                 <a href="index.html#contact" class="nav-link">Contact</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="Engagement-title">Engagement</h1>
-        <p class="Engagement-subtitle">Capturing the promise of forever.</p>
+        <h1 class="gallery-title">Gallery</h1>
+        <p class="gallery-subtitle">Capturing the promise of forever.</p>
         
         <div class="photo-grid">
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engagement 1"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engagement 2"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engagement 3"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1522673607200-1645062cd958?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engagement 4"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engagement 5"></div>
-            <div class="photo-card"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engagement 6"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 1"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 2"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 3"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1522673607200-1645062cd958?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 4"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 5"></div>
+            <div class="photo-card"><img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 6"></div>
         </div>
     </div>
 
@@ -388,6 +405,8 @@
     <script>
         const sideMenu = document.querySelector('.side-menu');
         const sideMenuTrigger = document.querySelector('.side-menu-trigger');
+        const navbar = document.querySelector('.page-header');
+        let lastScrollY = 0;
 
         function toggleSideMenu() {
             if(sideMenu) sideMenu.classList.toggle('visible');
@@ -409,7 +428,24 @@
             }
         });
 
-        // Lightbox behavior for Engagement images
+        // Show/Hide navbar on scroll - Hide when scrolling DOWN, Show when scrolling UP
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            if (navbar) {
+                if (currentScrollY > 100 && currentScrollY > lastScrollY) {
+                    // Scrolling down - hide navbar
+                    navbar.classList.add('hidden');
+                } else {
+                    // Scrolling up - show navbar
+                    navbar.classList.remove('hidden');
+                }
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // Lightbox behavior for gallery images
         (function() {
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox';

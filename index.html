@@ -6,7 +6,6 @@
     <title>JollyStudio | Royal Wedding Photography</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="layouts.css">
     
     <style>
         /* --- ROYAL THEME VARIABLES --- */
@@ -61,9 +60,9 @@
         .btn-outline { border: 1px solid var(--primary-burgundy); color: var(--primary-burgundy); background: transparent; }
         .btn-outline:hover { background: var(--primary-burgundy); color: var(--primary-gold); }
 
-        /* --- TOP NAVBAR (Always Visible) --- */
+        /* --- TOP NAVBAR --- */
         .navbar {
-            position: fixed; /* Always visible */
+            position: fixed;
             top: 0; left: 0; width: 100%;
             background-color: var(--bg-cream);
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
@@ -80,10 +79,9 @@
         .logo { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--primary-burgundy); line-height: 1; }
         .logo span { color: var(--primary-gold); }
 
-        /* Top Navigation Menu */
-        .top-nav-menu { display: flex; gap: 35px; align-items: center; }
+        /* Desktop Navigation Menu */
+        .desktop-nav { display: flex; gap: 35px; align-items: center; }
 
-        /* Hover Effect: Gold Underline */
         .nav-link { 
             color: var(--text-dark); font-weight: 600; font-size: 0.85rem; 
             text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 5px;
@@ -91,10 +89,31 @@
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--primary-gold); transition: width 0.3s ease; }
         .nav-link:hover { color: var(--primary-burgundy); }
         .nav-link:hover::after { width: 100%; }
-
         .nav-link.active { color: var(--primary-burgundy); font-weight: 700; }
 
-        /* --- SIDE MENU (Separate, Appears on Scroll) --- */
+        /* Mobile Menu Trigger - HIDDEN ON DESKTOP */
+        .side-menu-trigger {
+            display: none; /* Hidden by default on desktop */
+            position: fixed; 
+            top: 20px; 
+            right: 20px;
+            width: 45px; 
+            height: 45px;
+            background: var(--primary-burgundy); 
+            color: var(--primary-gold);
+            border-radius: 50%; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            z-index: 2001;
+            border: 2px solid var(--primary-gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: 0.4s ease;
+        }
+        .side-menu-trigger:hover { transform: scale(1.1); }
+
+        /* --- SIDE MENU (For Mobile) --- */
         .side-menu {
             position: fixed; top: 0; left: -280px;
             height: 100vh; width: 280px;
@@ -109,32 +128,18 @@
             text-align: center;
             margin-bottom: 40px;
             font-family: 'Great Vibes', cursive;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--primary-burgundy);
             line-height: 1;
         }
         .side-menu-logo span { color: var(--primary-gold); }
         .side-menu ul { display: flex; flex-direction: column; gap: 30px; align-items: center; }
-        .side-menu .nav-link { font-size: 0.9rem; }
+        .side-menu .nav-link { font-size: 1.1rem; }
         .side-menu .close-btn { 
             position: absolute; top: 20px; right: 20px; 
             cursor: pointer; font-size: 1.5rem; color: var(--primary-burgundy);
             background: none; border: none; padding: 0;
         }
-
-        /* Side Menu Trigger Button (Appears on Scroll) */
-        .side-menu-trigger {
-            position: fixed; top: 25px; left: 25px;
-            width: 50px; height: 50px;
-            background: var(--primary-burgundy); color: var(--primary-gold);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; cursor: pointer; z-index: 1999;
-            border: 2px solid var(--primary-gold);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            opacity: 0; pointer-events: none; transition: 0.4s ease; transform: scale(0.8);
-        }
-        .side-menu-trigger.visible { opacity: 1; pointer-events: all; transform: scale(1); }
-        .side-menu-trigger:hover { transform: scale(1.1); }
 
         /* --- HERO --- */
         .hero {
@@ -171,7 +176,6 @@
             padding: 20px;
             max-width: 90%;
         }
-        /* Hero text gradient + entrance */
         .hero-content h1 {
             font-size: 6.5rem; margin-bottom: 10px; line-height: 1.1;
             background: linear-gradient(90deg, var(--primary-burgundy), var(--primary-gold));
@@ -179,35 +183,29 @@
             transform: translateY(20px); opacity: 0; transition: all 0.8s ease;
         }
         .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; font-family: 'Playfair Display', serif; letter-spacing: 1px; font-style: italic; color: var(--text-dark); transform: translateY(10px); opacity: 0; transition: all 0.9s ease; }
-        /* Reveal on scroll */
+        
         .reveal { transform: translateY(20px); opacity: 0; transition: all 0.9s ease; }
         .reveal.visible { transform: translateY(0); opacity: 1; }
 
-        /* Counter style */
         .stat { text-align: center; }
         .stat .number { font-size: 2.2rem; color: var(--primary-burgundy); }
 
-        /* Service card 3D hover */
         .service-card { transform-style: preserve-3d; perspective: 1000px; }
         .service-card:hover { transform: translateY(-8px) rotateX(3deg); box-shadow: 0 25px 50px rgba(0,0,0,0.08); }
 
-        /* CTA pulse */
         @keyframes pulseBtn { 0%{ box-shadow:0 5px 15px rgba(74,14,18,0.2);}50%{ box-shadow:0 10px 30px rgba(197,160,89,0.12); transform: translateY(-2px);}100%{ box-shadow:0 5px 15px rgba(74,14,18,0.2);} }
         .btn-primary.pulse { animation: pulseBtn 3s infinite; }
 
-        /* Lightbox modal */
         .lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:4000; opacity:0; pointer-events:none; transition: opacity 0.3s ease; }
         .lightbox.visible { opacity:1; pointer-events:auto; }
         .lightbox img { max-width:90%; max-height:90%; border-radius:8px; }
 
-        /* Testimonials (removed) */
-
-        /* --- SERVICES (Animated & Arch) --- */
+        /* --- SERVICES --- */
         .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         a.service-card {
             display: block; text-decoration: none; color: inherit;
             background: var(--white); padding: 50px 25px; text-align: center;
-            border-radius: 200px 200px 10px 10px; /* Arch Shape */
+            border-radius: 200px 200px 10px 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: var(--transition);
             border: 1px solid rgba(197, 160, 89, 0.2);
         }
@@ -215,7 +213,6 @@
         .service-icon { font-size: 2.5rem; color: var(--primary-burgundy); margin-bottom: 20px; transition: 0.3s; }
         .service-card h3 { font-size: 2.5rem; margin-bottom: 15px; font-family: 'Great Vibes', cursive; }
 
-        /* --- ICON ANIMATIONS --- */
         @keyframes cameraFlash { 0%, 100% { transform: scale(1); text-shadow: none; } 50% { transform: scale(1.1); text-shadow: 0 0 15px rgba(197, 160, 89, 0.8); } }
         @keyframes ringWiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
         @keyframes rockBaby { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
@@ -226,11 +223,10 @@
         .service-card:hover .fa-baby { animation: rockBaby 2s infinite ease-in-out; }
         .service-card:hover .fa-crop-simple, .service-card:hover .fa-mug-hot { animation: floatUp 2s infinite ease-in-out; }
 
-        /* Filter buttons */
         .filter-btn { display:inline-block; margin:0 6px; padding:8px 14px; border-radius:30px; border:1px solid rgba(0,0,0,0.06); background:#fff; cursor:pointer; }
         .filter-btn.active { background:var(--primary-burgundy); color:var(--primary-gold); border-color:var(--primary-burgundy); }
 
-        /* --- GALLERY (Masonry/Pinterest Style) --- */
+        /* --- GALLERY --- */
         .gallery-grid { 
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -247,16 +243,9 @@
             border-radius: 12px;
         }
         
-        /* Masonry grid positioning */
         .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
         .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
         .gallery-item:nth-child(3) { grid-column: 3; grid-row: 1; }
-        .gallery-item:nth-child(4) { grid-column: 2; grid-row: 2; }
-        .gallery-item:nth-child(5) { grid-column: 3; grid-row: 2; }
-        .gallery-item:nth-child(6) { grid-column: 1; grid-row: 3; }
-        .gallery-item:nth-child(7) { grid-column: 2; grid-row: 3 / span 2; }
-        .gallery-item:nth-child(8) { grid-column: 3; grid-row: 3; }
-        .gallery-item:nth-child(9) { grid-column: 1; grid-row: 4 / span 2; }
         
         .gallery-item img { 
             width: 100%; 
@@ -277,8 +266,18 @@
         .float-wa { position: fixed; width: 65px; height: 65px; bottom: 35px; right: 35px; background-color: var(--primary-burgundy); color: var(--white); border-radius: 50%; font-size: 32px; box-shadow: 0 5px 20px rgba(74, 14, 18, 0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; border: 2px solid var(--primary-gold); }
 
         /* --- RESPONSIVE DESIGN --- */
+
+        /* Tablet and Mobile - Show hamburger menu, hide desktop nav */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            .side-menu-trigger {
+                display: flex; /* Show on mobile/tablet */
+            }
+        }
+
         @media (max-width: 1024px) {
-            /* Tablet: iPad, Surface */
             .section-title { font-size: 3.8rem; }
             .section-subtitle { font-size: 0.75rem; }
             .services-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
@@ -296,26 +295,15 @@
             .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
             .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
             .gallery-item:nth-child(3) { grid-column: 2; grid-row: 2; }
-            .gallery-item:nth-child(4) { grid-column: 1; grid-row: 3; }
-            .gallery-item:nth-child(5) { grid-column: 2; grid-row: 3 / span 2; }
-            .gallery-item:nth-child(6) { grid-column: 1; grid-row: 4 / span 2; }
-            .gallery-item:nth-child(7) { grid-column: 2; grid-row: 5; }
-            .gallery-item:nth-child(8) { grid-column: 1; grid-row: 6; }
-            .gallery-item:nth-child(9) { grid-column: 2; grid-row: 6; }
-            .top-nav-menu { gap: 25px; }
-            .nav-link { font-size: 0.8rem; }
+            .logo { font-size: 1.8rem; }
         }
 
         @media (max-width: 768px) {
-            /* Mobile: Phones & Small Tablets */
-            
-            /* Typography scaling */
             .section-title { font-size: 2.5rem; margin-bottom: 0.8rem; }
             .section-subtitle { font-size: 0.7rem; margin-bottom: 2rem; letter-spacing: 2px; }
             .hero-content h1 { font-size: 2.8rem; margin-bottom: 15px; }
             .hero-content p { font-size: 0.95rem; }
 
-            /* Navigation */
             .navbar { 
                 position: fixed; 
                 height: auto; 
@@ -324,18 +312,15 @@
             }
             .nav-container { padding: 0 15px; }
             .logo { font-size: 1.5rem; }
-            .top-nav-menu { display: none; }
             
-            /* Hero section offset */
             .hero { 
                 margin-top: 0;
                 padding-top: 55px;
                 min-height: 100vh;
             }
 
-            /* Services grid */
             .services-grid { 
-                grid-template-columns: 1fr; 
+                grid-template-columns: repeat(2, 1fr); 
                 gap: 20px; 
             }
             a.service-card { 
@@ -346,34 +331,21 @@
             .service-card p { font-size: 0.9rem; }
             .service-icon { font-size: 2rem; }
 
-            /* About section */
             .section-padding { padding: 60px 0; }
             .stat .number { font-size: 1.8rem; }
             .stat p { font-size: 0.7rem; }
 
-            /* Gallery */
             .gallery-grid { 
-                column-width: 100%; 
-                column-gap: 15px;
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 grid-auto-rows: 200px;
                 gap: 15px;
             }
-            .gallery-item { 
-                margin: 0;
-            }
+            .gallery-item { margin: 0; }
             .gallery-item:nth-child(1) { grid-column: 1; grid-row: auto; }
             .gallery-item:nth-child(2) { grid-column: 2; grid-row: auto; }
             .gallery-item:nth-child(3) { grid-column: 1; grid-row: auto; }
-            .gallery-item:nth-child(4) { grid-column: 2; grid-row: auto; }
-            .gallery-item:nth-child(5) { grid-column: 1; grid-row: auto; }
-            .gallery-item:nth-child(6) { grid-column: 2; grid-row: auto; }
-            .gallery-item:nth-child(7) { grid-column: 1; grid-row: auto; }
-            .gallery-item:nth-child(8) { grid-column: 2; grid-row: auto; }
-            .gallery-item:nth-child(9) { grid-column: 1; grid-row: auto; }
 
-            /* Contact section */
             .contact-container { 
                 flex-direction: column; 
                 gap: 30px; 
@@ -392,7 +364,6 @@
                 letter-spacing: 1px;
             }
 
-            /* Float WhatsApp button */
             .float-wa { 
                 width: 55px; 
                 height: 55px; 
@@ -401,7 +372,6 @@
                 font-size: 28px;
             }
 
-            /* Side menu adjustments */
             .side-menu { 
                 width: 250px; 
                 left: -250px; 
@@ -412,35 +382,22 @@
                 margin-bottom: 30px;
             }
             .side-menu ul { gap: 20px; }
-            .side-menu-trigger { 
-                width: 45px; 
-                height: 45px; 
-                top: 15px; 
-                left: 15px; 
-                font-size: 1rem;
-            }
 
-            /* Footer */
             footer { padding: 40px 0; }
         }
 
         @media (max-width: 480px) {
-            /* Small Mobile: Phones */
-            
             .container { padding: 0 15px; }
             
-            /* Typography */
             .section-title { font-size: 2rem; }
             .section-subtitle { font-size: 0.65rem; margin-bottom: 1.5rem; }
             .hero { padding-top: 50px; }
             .hero-content h1 { font-size: 2rem; line-height: 1.2; }
             .hero-content p { font-size: 0.85rem; max-width: 100%; }
 
-            /* Navigation */
             .logo { font-size: 1.2rem; }
             .navbar { padding: 10px 0; }
 
-            /* Services */
             .services-grid { gap: 15px; }
             a.service-card { 
                 padding: 25px 15px; 
@@ -450,13 +407,11 @@
             .service-card p { font-size: 0.8rem; }
             .service-icon { font-size: 1.8rem; margin-bottom: 15px; }
 
-            /* About section */
             .section-padding { padding: 40px 0; }
             h3 { font-size: 1.5rem !important; }
             .stat .number { font-size: 1.5rem; }
             .stat p { font-size: 0.65rem; }
 
-            /* Contact section */
             .contact-info h3 { font-size: 1.5rem; }
             .contact-info p { font-size: 0.85rem; }
             .contact-icon { 
@@ -474,11 +429,8 @@
                 font-size: 0.8rem;
             }
 
-            /* Gallery */
-            .gallery-grid { column-width: 100%; }
             .gallery-item img { border-radius: 8px; }
 
-            /* Float button */
             .float-wa { 
                 width: 50px; 
                 height: 50px; 
@@ -487,17 +439,13 @@
                 font-size: 24px;
             }
 
-            /* Side menu */
             .side-menu { width: 220px; left: -220px; }
             .side-menu-logo { font-size: 1.3rem; }
-            .side-menu-trigger { width: 40px; height: 40px; }
 
-            /* Footer */
             footer { padding: 30px 0; }
             .logo { margin-bottom: 15px; }
         }
 
-        /* Landscape orientation adjustments */
         @media (max-width: 768px) and (orientation: landscape) {
             .hero { min-height: 150vh; padding-top: 45px; }
             .section-padding { padding: 50px 0; }
@@ -507,28 +455,12 @@
 </head>
 <body>
 
-    <!-- Side Menu Trigger Button (Appears on Scroll) -->
+    <!-- Mobile Menu Trigger (only visible on mobile/tablet) -->
     <div class="side-menu-trigger">
         <i class="fas fa-bars"></i>
     </div>
 
-    <!-- TOP NAVIGATION (Always Visible) -->
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">Jolly<span>Studio</span></a>
-            
-            <!-- Top Navigation Menu -->
-            <ul class="top-nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#gallery" class="nav-link">Gallery</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- SIDE MENU (Appears on Scroll) -->
+    <!-- Mobile Side Menu -->
     <div class="side-menu">
         <button class="close-btn" onclick="toggleSideMenu()">
             <i class="fas fa-times"></i>
@@ -543,6 +475,22 @@
         </ul>
     </div>
 
+    <!-- TOP NAVIGATION -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">Jolly<span>Studio</span></a>
+            
+            <!-- Desktop Navigation (visible on desktop) -->
+            <nav class="desktop-nav">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </nav>
+
     <section id="home" class="hero">
         <video autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload noremoteplayback nofullscreen" draggable="false" oncontextmenu="return false;">
             <source src="video.mp4" type="video/mp4">
@@ -555,7 +503,6 @@
         </div>
     </section>
 
-    <!-- Lightbox Modal -->
     <div id="lightbox" class="lightbox" aria-hidden="true">
         <img src="" alt="Expanded">
     </div>
@@ -582,44 +529,37 @@
         </div>
     </section>
 
-    <!-- Services Section with Distinct Background -->
     <section id="services" class="section-padding reveal" style="background-color: var(--bg-distinct);">
         <div class="container">
             <h2 class="section-title">Our Services</h2>
             <p class="section-subtitle">Select a service to view the gallerys</p>
             
             <div class="services-grid">
-                <!-- Engagement -->
                 <a href="Engagement.html" class="service-card">
                     <i class="fas fa-ring service-icon"></i>
                     <h3>Engagement</h3>
                     <p>Capturing the promise of forever.</p>
                 </a>
-                <!-- Pre-Wedding -->
                 <a href="PreWedding.html" class="service-card">
                     <i class="fas fa-heart service-icon"></i>
                     <h3>Pre-Wedding</h3>
                     <p>Capturing your love before the big day.</p>
                 </a>
-                <!-- Wedding -->
                 <a href="Wedding.html" class="service-card">
                     <i class="fas fa-camera-retro service-icon"></i>
                     <h3>The Wedding</h3>
                     <p>Full event coverage & rituals.</p>
                 </a>
-                <!-- Maternity -->
                 <a href="Maternity.html" class="service-card">
                     <i class="fas fa-baby-carriage service-icon"></i>
                     <h3>Maternity</h3>
                     <p>Gentle, artistic parenthood portraits.</p>
                 </a>
-                <!-- Baby Shoot -->
                 <a href="Baby.html" class="service-card">
                     <i class="fas fa-baby service-icon"></i>
                     <h3>Baby shoots</h3>
                     <p>Tiny toes and precious smiles.</p>
                 </a>
-            <!-- Products -->
                 <a href="product.html" class="service-card">
                     <i class="fas fa-mug-hot service-icon"></i>
                     <h3>Products</h3>
@@ -652,10 +592,18 @@
                 <div class="contact-info">
                     <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1.1;">Mumbai & Worldwide</h3>
                     <p style="margin-bottom: 40px; color: #666; font-size: 1.1rem;">We are accepting bookings for the upcoming season. Fill out the form to chat with us directly on WhatsApp.</p>
-                    <div style="display: flex; align-items: center; margin-bottom: 30px;">
+                    <a href="https://wa.me/919820293428" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
                         <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
-                        <div><h4 style="margin: 0; font-size: 1.2rem;">WhatsApp</h4><p style="margin: 0; color: #777;">+91 98202 93428</p></div>
-                    </div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">WhatsApp</h4><p style="margin: 0; color: #777;">+91 98202 93428</p></div>
+                    </a>
+                    <a href="https://instagram.com/jollystudio" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                        <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Instagram</h4><p style="margin: 0; color: #777;">@jollystudio</p></div>
+                    </a>
+                    <a href="mailto:info@jollystudio.com" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Email</h4><p style="margin: 0; color: #777;">info@jollystudio.com</p></div>
+                    </a>
                 </div>
                 <div class="contact-form-wrapper">
                     <form id="whatsappForm">
@@ -684,7 +632,6 @@
 
     <a href="https://wa.me/919820293428" class="float-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
-    <script src="dynamic-padding.js"></script>
     <script>
         (function(){
             const sideMenu = document.querySelector('.side-menu');
@@ -692,21 +639,17 @@
             const navbar = document.querySelector('.navbar');
             let lastScrollY = 0;
 
-            // Toggle side menu
             function toggleSideMenu() { 
                 if(sideMenu) sideMenu.classList.toggle('visible'); 
             }
             
-            // Make function global so onclick works
             window.toggleSideMenu = toggleSideMenu;
 
-            // Trigger button click
             if(sideMenuTrigger) sideMenuTrigger.addEventListener('click', function(e){ 
                 e.stopPropagation(); 
                 toggleSideMenu(); 
             });
 
-            // Close menu when clicking outside
             document.addEventListener('click', function(event) {
                 if(!sideMenu) return;
                 const isClickInsideMenu = sideMenu.contains(event.target);
@@ -716,34 +659,20 @@
                 }
             });
 
-            // Show/Hide navbar and trigger button on scroll
             window.addEventListener('scroll', () => {
                 const currentScrollY = window.scrollY;
 
-                // Hide navbar when scrolling down, show when scrolling up
                 if (navbar) {
                     if (currentScrollY > 100 && currentScrollY > lastScrollY) {
-                        // Scrolling down
                         navbar.classList.add('hidden');
                     } else {
-                        // Scrolling up or at top
                         navbar.classList.remove('hidden');
-                    }
-                }
-
-                // Show trigger button on scroll (at 300px)
-                if (sideMenuTrigger) {
-                    if (currentScrollY > 300) {
-                        sideMenuTrigger.classList.add('visible');
-                    } else {
-                        sideMenuTrigger.classList.remove('visible');
                     }
                 }
 
                 lastScrollY = currentScrollY;
             });
 
-            // Reveal on scroll (for multiple elements)
             const revealEls = document.querySelectorAll('.reveal, .hero-content');
             const revealObserver = new IntersectionObserver((entries, obs) => {
                 entries.forEach(e => {
@@ -755,7 +684,6 @@
             }, { threshold: 0.15 });
             revealEls.forEach(el => revealObserver.observe(el));
 
-            // Animated counters
             const counters = document.querySelectorAll('.number');
             const counterObserver = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
@@ -776,7 +704,6 @@
             }, { threshold: 0.2 });
             counters.forEach(c => counterObserver.observe(c));
 
-            // Gallery filters
             const filterBtns = document.querySelectorAll('.filter-btn');
             const galleryItems = document.querySelectorAll('.gallery-item');
             filterBtns.forEach(btn => btn.addEventListener('click', () => {
@@ -789,7 +716,6 @@
                 });
             }));
 
-            // Lightbox
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = lightbox ? lightbox.querySelector('img') : null;
             document.querySelectorAll('.gallery-item img').forEach(img => {
@@ -802,9 +728,6 @@
             });
             if (lightbox) lightbox.addEventListener('click', () => { lightbox.classList.remove('visible'); lightbox.setAttribute('aria-hidden','true'); });
 
-            // Testimonials carousel removed
-
-            // Nav active highlight using sections
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
             const navObserver = new IntersectionObserver((entries) => {
@@ -817,10 +740,8 @@
             }, { threshold: 0.4 });
             sections.forEach(s => navObserver.observe(s));
 
-            // Pulse CTA
             const cta = document.querySelector('.btn-primary'); if (cta) cta.classList.add('pulse');
 
-            // Form submission with validation + success microanimation then open WhatsApp
             const form = document.getElementById('whatsappForm');
             if (form) {
                 form.addEventListener('submit', function(e){
