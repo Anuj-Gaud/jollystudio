@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JollyStudio | Royal Wedding Photography</title>
+    <title>JollyStudio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
@@ -67,16 +67,23 @@
             background-color: var(--bg-cream);
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             z-index: 1000;
-            padding: 15px 0;
+            padding: 12px 0;
             transition: transform 0.3s ease;
             transform: translateY(0);
+        }
+        
+        @media (min-width: 769px) {
+            .navbar {
+                padding: 12px 0;
+            }
         }
         .navbar.hidden {
             transform: translateY(-100%);
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         
-        .logo { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--primary-burgundy); line-height: 1; }
+        .logo { display: flex; align-items: center; height: 60px; }
+        .logo img { height: 100%; width: auto; object-fit: contain; }
         .logo span { color: var(--primary-gold); }
 
         /* Desktop Navigation Menu */
@@ -91,9 +98,54 @@
         .nav-link:hover::after { width: 100%; }
         .nav-link.active { color: var(--primary-burgundy); font-weight: 700; }
 
+        /* --- LOCATION BAR (Mobile Only) --- */
+        .location-bar {
+            display: none;
+            position: absolute;
+            right: 25px;
+            top: 125px;
+            z-index: 5;
+            align-items: center;
+            gap: 8px;
+            flex-direction: row;
+        }
+
+        .location-pin {
+            position: relative;
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+        }
+
+        .location-pin svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .location-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* Button wrapper for all devices */
+        .hero-button-wrapper {
+            display: block;
+            position: absolute;
+            top: 75%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 4;
+            transform: translateY(-50%);
+        }
+
         /* Mobile Menu Trigger - HIDDEN ON DESKTOP */
         .side-menu-trigger {
-            display: none; /* Hidden by default on desktop */
+            display: none;
             position: fixed; 
             top: 20px; 
             right: 20px;
@@ -127,11 +179,11 @@
         .side-menu-logo {
             text-align: center;
             margin-bottom: 40px;
-            font-family: 'Great Vibes', cursive;
-            font-size: 1.6rem;
-            color: var(--primary-burgundy);
-            line-height: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+        .side-menu-logo img { height: 60px; width: auto; object-fit: contain; }
         .side-menu-logo span { color: var(--primary-gold); }
         .side-menu ul { display: flex; flex-direction: column; gap: 30px; align-items: center; }
         .side-menu .nav-link { font-size: 1.1rem; }
@@ -145,44 +197,131 @@
         .hero {
             height: 100vh;
             position: relative;
-            display: flex; align-items: center; justify-content: center; text-align: center; color: var(--primary-burgundy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
             margin-top: 0;
             overflow: hidden;
             padding-top: 0;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(255,252,247,0.2), rgba(255,252,247,0.4));
-            z-index: 2;
-            pointer-events: none;
-        }
+        
         .hero video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 1;
-            min-width: 100%;
-            min-height: 100%;
+            z-index: 0;
+            background: #000000;
         }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
         .hero-content {
             position: relative;
             z-index: 3;
-            padding: 20px;
-            max-width: 90%;
+            padding: 40px 20px;
+            max-width: 95%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        .hero-top-label {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: var(--primary-gold);
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            margin-bottom: 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            z-index: 3;
+            display: none;
+        }
+
+        .hero-top-label img {
+            height: 90px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
         .hero-content h1 {
-            font-size: 6.5rem; margin-bottom: 10px; line-height: 1.1;
-            background: linear-gradient(90deg, var(--primary-burgundy), var(--primary-gold));
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            transform: translateY(20px); opacity: 0; transition: all 0.8s ease;
+            font-size: 5rem;
+            margin: 15px 0;
+            line-height: 1.2;
+            color: var(--white);
+            font-weight: 400;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.9s ease;
+            text-transform: capitalize;
         }
-        .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; font-family: 'Playfair Display', serif; letter-spacing: 1px; font-style: italic; color: var(--text-dark); transform: translateY(10px); opacity: 0; transition: all 0.9s ease; }
+
+        .hero-content .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--primary-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 20px 0 30px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 30px auto 40px;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.85);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.1s ease;
+            line-height: 1.6;
+        }
+
+        .hero-image-frame {
+            position: relative;
+            margin: 40px 0;
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 1.2s ease;
+            z-index: 2;
+        }
+
+        .hero-image-frame img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            object-fit: cover;
+        }
         
         .reveal { transform: translateY(20px); opacity: 0; transition: all 0.9s ease; }
         .reveal.visible { transform: translateY(0); opacity: 1; }
@@ -217,20 +356,24 @@
         @keyframes ringWiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
         @keyframes rockBaby { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
         @keyframes floatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes balloonBounce { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.08); } }
+        @keyframes cakeSpin { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(8deg); } }
+        @keyframes frameShake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-2deg); } 75% { transform: rotate(2deg); } }
 
         .service-card:hover .fa-camera-retro { animation: cameraFlash 1.5s infinite; }
         .service-card:hover .fa-ring { animation: ringWiggle 1s infinite; }
         .service-card:hover .fa-baby { animation: rockBaby 2s infinite ease-in-out; }
         .service-card:hover .fa-crop-simple, .service-card:hover .fa-mug-hot { animation: floatUp 2s infinite ease-in-out; }
-
-        .filter-btn { display:inline-block; margin:0 6px; padding:8px 14px; border-radius:30px; border:1px solid rgba(0,0,0,0.06); background:#fff; cursor:pointer; }
-        .filter-btn.active { background:var(--primary-burgundy); color:var(--primary-gold); border-color:var(--primary-burgundy); }
+        .service-card:hover svg { animation: inherit; }
+        .service-card:nth-child(5):hover svg { animation: balloonBounce 1.5s infinite ease-in-out; }
+        .service-card:nth-child(7):hover svg { animation: cakeSpin 1.5s infinite ease-in-out; }
+        .service-card:nth-child(9):hover svg { animation: frameShake 1s infinite ease-in-out; }
 
         /* --- GALLERY --- */
         .gallery-grid { 
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 250px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
             gap: 20px;
         }
         .gallery-item { 
@@ -242,10 +385,6 @@
             overflow: hidden;
             border-radius: 12px;
         }
-        
-        .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
-        .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
-        .gallery-item:nth-child(3) { grid-column: 3; grid-row: 1; }
         
         .gallery-item img { 
             width: 100%; 
@@ -260,6 +399,13 @@
         /* --- CONTACT --- */
         .contact-container { display: flex; flex-wrap: wrap; gap: 60px; }
         .contact-info, .contact-form-wrapper { flex: 1; min-width: 300px; }
+        .contact-info h3 { 
+            font-size: 3rem; 
+            margin-bottom: 20px; 
+            line-height: 1.1; 
+            font-family: 'Great Vibes', cursive;
+            color: var(--primary-burgundy);
+        }
         .contact-icon { width: 55px; height: 55px; background: var(--bg-cream); border: 1px solid var(--primary-burgundy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-burgundy); font-size: 1.3rem; margin-right: 20px; }
         .form-control { width: 100%; padding: 15px; border: 1px solid #e0d0b8; background-color: var(--white); font-family: 'Playfair Display', serif; margin-bottom: 20px; border-radius: 4px; }
         
@@ -273,7 +419,7 @@
                 display: none;
             }
             .side-menu-trigger {
-                display: flex; /* Show on mobile/tablet */
+                display: flex;
             }
         }
 
@@ -282,11 +428,15 @@
             .section-subtitle { font-size: 0.75rem; }
             .services-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
             a.service-card { padding: 40px 20px; }
-            .service-card h3 { font-size: 2.2rem; }
+            .service-card h3 { font-size: 2.2rem; font-family: 'Great Vibes', cursive; }
             .service-icon { font-size: 2.2rem; }
             .hero-content h1 { font-size: 5.5rem; }
             .hero-content p { font-size: 1.1rem; }
             .contact-container { gap: 40px; }
+            .contact-info h3 { 
+                font-size: 2.5rem; 
+                font-family: 'Great Vibes', cursive;
+            }
             .gallery-grid { 
                 grid-template-columns: repeat(2, 1fr);
                 grid-auto-rows: 220px;
@@ -295,29 +445,91 @@
             .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
             .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
             .gallery-item:nth-child(3) { grid-column: 2; grid-row: 2; }
-            .logo { font-size: 1.8rem; }
+            .logo { font-size: 2.2rem; }
         }
 
         @media (max-width: 768px) {
-            .section-title { font-size: 2.5rem; margin-bottom: 0.8rem; }
+            .location-bar {
+                display: flex;
+            }
+
+            .hero-button-wrapper .btn {
+                padding: 20px 50px;
+                font-size: 1rem;
+            }
+
+            .hero-top-label {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                margin-bottom: 20px;
+                display: block;
+            }
+
+            .hero-top-label img {
+                height: 75px;
+                width: auto;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .section-title { font-size: 3rem; margin-bottom: 0.8rem; }
             .section-subtitle { font-size: 0.7rem; margin-bottom: 2rem; letter-spacing: 2px; }
-            .hero-content h1 { font-size: 2.8rem; margin-bottom: 15px; }
-            .hero-content p { font-size: 0.95rem; }
+            
+            /* Mobile-only bottom-left positioning for hero */
+            .hero { 
+                margin-top: 0;
+                padding-top: 55px;
+                min-height: 65vh;
+                justify-content: flex-end;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .hero video {
+                object-fit: contain;
+            }
+
+            .hero-content {
+                position: absolute;
+                bottom: 40px;
+                left: 20px;
+                max-width: calc(100% - 40px);
+                align-items: flex-start;
+                padding: 0;
+                justify-content: flex-start;
+            }
+
+            .hero-top-label {
+                margin-bottom: 8px;
+                font-size: 1.3rem;
+            }
+
+            .hero-content h1 { 
+                font-size: 2.8rem; 
+                line-height: 1.1;
+                margin: 0;
+            }
+
+            .hero-content .hero-subtitle {
+                margin: 8px 0 12px 0;
+                font-size: 0.95rem;
+            }
+
+            .hero-content p { 
+                font-size: 0.95rem; 
+                margin: 12px 0 20px 0;
+                max-width: 100%;
+            }
 
             .navbar { 
                 position: fixed; 
                 height: auto; 
-                padding: 12px 0; 
+                padding: 50px 0; 
                 z-index: 1000;
             }
-            .nav-container { padding: 0 15px; }
-            .logo { font-size: 1.5rem; }
-            
-            .hero { 
-                margin-top: 0;
-                padding-top: 55px;
-                min-height: 100vh;
-            }
+            .nav-container { padding: 0 5px; }
+            .logo { font-size: 3.2rem; }
 
             .services-grid { 
                 grid-template-columns: repeat(2, 1fr); 
@@ -327,7 +539,7 @@
                 padding: 35px 20px; 
                 border-radius: 150px 150px 10px 10px;
             }
-            .service-card h3 { font-size: 1.8rem; }
+            .service-card h3 { font-size: 2rem; font-family: 'Great Vibes', cursive; }
             .service-card p { font-size: 0.9rem; }
             .service-icon { font-size: 2rem; }
 
@@ -338,19 +550,20 @@
             .gallery-grid { 
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 200px;
+                grid-auto-rows: 180px;
                 gap: 15px;
             }
             .gallery-item { margin: 0; }
-            .gallery-item:nth-child(1) { grid-column: 1; grid-row: auto; }
-            .gallery-item:nth-child(2) { grid-column: 2; grid-row: auto; }
-            .gallery-item:nth-child(3) { grid-column: 1; grid-row: auto; }
 
             .contact-container { 
                 flex-direction: column; 
                 gap: 30px; 
             }
-            .contact-info h3 { font-size: 2rem; }
+            .contact-info h3 { 
+                font-size: 2.5rem; 
+                font-family: 'Great Vibes', cursive;
+                color: var(--primary-burgundy);
+            }
             .contact-info p { font-size: 0.95rem; }
             .contact-icon { width: 45px; height: 45px; font-size: 1.1rem; }
             .form-control { 
@@ -367,8 +580,8 @@
             .float-wa { 
                 width: 55px; 
                 height: 55px; 
-                bottom: 20px; 
-                right: 20px; 
+                bottom: 80px; 
+                right: 25px; 
                 font-size: 28px;
             }
 
@@ -389,30 +602,34 @@
         @media (max-width: 480px) {
             .container { padding: 0 15px; }
             
-            .section-title { font-size: 2rem; }
+            .section-title { font-size: 2.2rem; }
             .section-subtitle { font-size: 0.65rem; margin-bottom: 1.5rem; }
             .hero { padding-top: 50px; }
-            .hero-content h1 { font-size: 2rem; line-height: 1.2; }
-            .hero-content p { font-size: 0.85rem; max-width: 100%; }
+            .hero-content h1 { font-size: 2.5rem; line-height: 1.2; }
+            .hero-content p { font-size: 0.9rem; max-width: 100%; }
 
-            .logo { font-size: 1.2rem; }
-            .navbar { padding: 10px 0; }
+            .logo { font-size: 1.7rem; }
+            .navbar { padding: 20px 0; }
 
             .services-grid { gap: 15px; }
             a.service-card { 
                 padding: 25px 15px; 
                 border-radius: 120px 120px 8px 8px;
             }
-            .service-card h3 { font-size: 1.5rem; }
+            .service-card h3 { font-size: 1.6rem; font-family: 'Great Vibes', cursive; }
             .service-card p { font-size: 0.8rem; }
             .service-icon { font-size: 1.8rem; margin-bottom: 15px; }
 
             .section-padding { padding: 40px 0; }
-            h3 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.8rem !important; font-family: 'Great Vibes', cursive !important; }
             .stat .number { font-size: 1.5rem; }
             .stat p { font-size: 0.65rem; }
 
-            .contact-info h3 { font-size: 1.5rem; }
+            .contact-info h3 { 
+                font-size: 2rem; 
+                font-family: 'Great Vibes', cursive;
+                color: var(--primary-burgundy);
+            }
             .contact-info p { font-size: 0.85rem; }
             .contact-icon { 
                 width: 40px; 
@@ -434,8 +651,8 @@
             .float-wa { 
                 width: 50px; 
                 height: 50px; 
-                bottom: 15px; 
-                right: 15px; 
+                bottom: 70px; 
+                right: 20px; 
                 font-size: 24px;
             }
 
@@ -446,10 +663,93 @@
             .logo { margin-bottom: 15px; }
         }
 
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+
+            .hero-top-label {
+                font-size: 1.6rem;
+            }
+
+            .hero-image-frame img {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.8rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-top-label {
+                font-size: 1.4rem;
+            }
+
+            .hero-content .hero-subtitle {
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+
+            .hero-content p {
+                font-size: 0.95rem;
+            }
+
+            .hero-image-frame img {
+                max-width: 220px;
+            }
+
+            .hero-content {
+                padding: 30px 15px;
+            }
+
+            .hero::before {
+                background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.5) 100%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-top-label {
+                font-size: 1.2rem;
+            }
+
+            .hero-top-label img {
+                height: 60px;
+                width: auto;
+            }
+
+            .hero-content .hero-subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 1.5px;
+            }
+
+            .hero-content p {
+                font-size: 0.85rem;
+                margin: 20px auto 30px;
+            }
+
+            .hero-image-frame img {
+                max-width: 180px;
+            }
+
+            .hero-content {
+                padding: 20px 15px;
+            }
+
+            .hero::before {
+                background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%);
+            }
+        }
+
         @media (max-width: 768px) and (orientation: landscape) {
             .hero { min-height: 150vh; padding-top: 45px; }
             .section-padding { padding: 50px 0; }
-            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -465,7 +765,7 @@
         <button class="close-btn" onclick="toggleSideMenu()">
             <i class="fas fa-times"></i>
         </button>
-        <div class="side-menu-logo">Jolly<span>Studio</span></div>
+        <div class="side-menu-logo"><img src="logo.png" alt="Jolly Studio Logo"></div>
         <ul>
             <li><a href="#home" class="nav-link" onclick="toggleSideMenu()">Home</a></li>
             <li><a href="#about" class="nav-link" onclick="toggleSideMenu()">About</a></li>
@@ -478,7 +778,7 @@
     <!-- TOP NAVIGATION -->
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="#" class="logo">Jolly<span>Studio</span></a>
+            <a href="#" class="logo"><img src="logo.png" alt="Jolly Studio Logo"></a>
             
             <!-- Desktop Navigation (visible on desktop) -->
             <nav class="desktop-nav">
@@ -492,14 +792,26 @@
     </nav>
 
     <section id="home" class="hero">
+        <!-- Location Bar (Mobile Only) -->
+        <div class="location-bar">
+            <div class="location-pin">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
+                    <path d="M12 2C6.48 2 2 6.48 2 12c0 7 10 13 10 13s10-6 10-13c0-5.52-4.48-10-10-10zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                </svg>
+            </div>
+            <div class="location-text">Bhandup & Mumbai</div>
+        </div>
+
         <video autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload noremoteplayback nofullscreen" draggable="false" oncontextmenu="return false;">
-            <source src="video.mp4" type="video/mp4">
+            <source src="video.mov" type="video/quicktime">
+            <source src="video.mov" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="hero-content container">
-            <h1>Moments of Love</h1>
-            <p>Capturing your fairytale with royal elegance and timeless grace.</p>
-            <a href="#contact" class="btn btn-primary">Capture Your Memory</a>
+        
+
+
+        <div class="hero-button-wrapper">
+            <a href="#contact" class="btn btn-primary">Book Now</a>
         </div>
     </section>
 
@@ -507,32 +819,49 @@
         <img src="" alt="Expanded">
     </div>
 
-    <section id="about" class="section-padding reveal">
-        <div class="container">
-            <h2 class="section-title">The Artist's Soul</h2>
-            <p class="section-subtitle">Est. 2025 • Mumbai</p>
-            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 60px;">
-                <div style="flex: 1; min-width: 300px; position: relative;">
-                    <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 2px solid var(--primary-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 10px;" src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1&mute=1&loop=1&playlist=jNQXAC9IVRw" title="JollyStudio Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+ <section id="about" class="section-padding reveal">
+    <div class="container">
+        <h2 class="section-title">The Artist's Soul</h2>
+        <p class="section-subtitle">Est. 2025 • Mumbai</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 60px;">
+            <div style="flex: 1; min-width: 300px; position: relative;">
+                <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 2px solid var(--primary-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 10px;" 
+                        src="https://www.youtube.com/embed/s1GLofAAMQg?autoplay=1&mute=1&loop=1&playlist=s1GLofAAMQg" 
+                        title="JollyStudio Story" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
                 </div>
-                <div style="flex: 1; min-width: 300px;">
-                    <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1;">Weaving Memories</h3>
-                    <p style="margin-bottom: 25px; font-size: 1.05rem; color: #555;">At JollyStudio, we believe every love story deserves to be immortalized like a royal legend. We blend raw emotion with cinematic storytelling, creating imagery that transcends time.</p>
-                    <div style="display: flex; gap: 40px; margin-top: 30px; border-top: 1px solid #e0d0b8; padding-top: 30px;">
-                        <div class="stat"><div class="number" data-target="150">0</div><p style="font-size: 0.8rem; text-transform: uppercase; color: var(--primary-gold);">Weddings</p></div>
-                        <div class="stat"><div class="number" data-target="50">0</div><p style="font-size: 0.8rem; text-transform: uppercase; color: var(--primary-gold);">Countries</p></div>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1;">Weaving Memories</h3>
+                <p style="margin-bottom: 25px; font-size: 1.05rem; color: #555;">At JollyStudio, we believe every love story deserves to be immortalized like a royal legend. We blend raw emotion with cinematic storytelling, creating imagery that transcends time.</p>
+                <div style="display: flex; gap: 40px; margin-top: 30px; border-top: 1px solid #e0d0b8; padding-top: 30px;">
+                    <div class="stat">
+                        <div style="display: flex; align-items: baseline; justify-content: center;">
+                            <div class="number" data-target="1000">0</div>
+                            <span style="font-size: 2.2rem; color: var(--primary-burgundy);">+</span>
+                        </div>
+                        <p style="font-size: 0.8rem; text-transform: uppercase; color: var(--primary-gold);">Events</p>
+                    </div>
+                    <div class="stat">
+                        <div style="display: flex; align-items: baseline; justify-content: center;">
+                            <div class="number" data-target="50">0</div>
+                            <span style="font-size: 2.2rem; color: var(--primary-burgundy);">+</span>
+                        </div>
+                        <p style="font-size: 0.8rem; text-transform: uppercase; color: var(--primary-gold);">Years of Experience</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="services" class="section-padding reveal" style="background-color: var(--bg-distinct);">
         <div class="container">
             <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Select a service to view the gallerys</p>
+            <p class="section-subtitle">Select a service to view the galleries</p>
             
             <div class="services-grid">
                 <a href="Engagement.html" class="service-card">
@@ -555,15 +884,70 @@
                     <h3>Maternity</h3>
                     <p>Gentle, artistic parenthood portraits.</p>
                 </a>
+                <a href="Babyshower.html" class="service-card">
+                    <svg class="service-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 2.5rem; height: 2.5rem;">
+                        <circle cx="25" cy="20" r="12" fill="#4a0e12" opacity="0.85"/>
+                        <line x1="25" y1="32" x2="25" y2="50" stroke="#c5a059" stroke-width="2"/>
+                        <circle cx="50" cy="12" r="12" fill="#c5a059" opacity="0.9"/>
+                        <line x1="50" y1="24" x2="50" y2="50" stroke="#c5a059" stroke-width="2"/>
+                        <circle cx="75" cy="22" r="12" fill="#4a0e12" opacity="0.85"/>
+                        <line x1="75" y1="34" x2="75" y2="50" stroke="#c5a059" stroke-width="2"/>
+                        <rect x="32" y="55" width="36" height="30" fill="#c5a059" rx="2"/>
+                        <rect x="32" y="55" width="36" height="8" fill="#4a0e12"/>
+                        <rect x="47" y="50" width="6" height="38" fill="#4a0e12"/>
+                        <circle cx="38" cy="59" r="5" fill="#4a0e12"/>
+                        <circle cx="62" cy="59" r="5" fill="#4a0e12"/>
+                        <circle cx="50" cy="59" r="4" fill="#c5a059"/>
+                    </svg>
+                    <h3>Baby Shower</h3>
+                    <p>A celebration of new beginnings.</p>
+                </a>
                 <a href="Baby.html" class="service-card">
                     <i class="fas fa-baby service-icon"></i>
                     <h3>Baby shoots</h3>
                     <p>Tiny toes and precious smiles.</p>
                 </a>
+                <a href="Birthday.html" class="service-card">
+                    <svg class="service-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 2.5rem; height: 2.5rem;">
+                        <rect x="18" y="50" width="64" height="32" fill="#c5a059" rx="3"/>
+                        <ellipse cx="50" cy="50" rx="32" ry="9" fill="#d4b896"/>
+                        <circle cx="30" cy="56" r="6" fill="#4a0e12" opacity="0.8"/>
+                        <circle cx="50" cy="54" r="6" fill="#4a0e12" opacity="0.8"/>
+                        <circle cx="70" cy="56" r="6" fill="#4a0e12" opacity="0.8"/>
+                        <rect x="33" y="38" width="5" height="16" fill="#c5a059" rx="2"/>
+                        <rect x="48" y="32" width="5" height="22" fill="#c5a059" rx="2"/>
+                        <rect x="63" y="38" width="5" height="16" fill="#c5a059" rx="2"/>
+                        <path d="M 35.5 36 Q 34 32 35.5 28 Q 37 32 35.5 36" fill="#d4a574"/>
+                        <path d="M 35.5 34 Q 35 31 35.5 28" fill="#4a0e12" opacity="0.7"/>
+                        <path d="M 50.5 29 Q 49 24 50.5 20 Q 52 24 50.5 29" fill="#d4a574"/>
+                        <path d="M 50.5 27 Q 50 23 50.5 20" fill="#4a0e12" opacity="0.7"/>
+                        <path d="M 65.5 36 Q 64 32 65.5 28 Q 67 32 65.5 36" fill="#d4a574"/>
+                        <path d="M 65.5 34 Q 65 31 65.5 28" fill="#4a0e12" opacity="0.7"/>
+                        <ellipse cx="50" cy="84" rx="35" ry="7" fill="#4a0e12" opacity="0.4"/>
+                    </svg>
+                    <h3>Birthday</h3>
+                    <p>Memorable moments captured beautifully.</p>
+                </a>
                 <a href="product.html" class="service-card">
                     <i class="fas fa-mug-hot service-icon"></i>
                     <h3>Products</h3>
                     <p>Professional product designing.</p>
+                </a>
+                <a href="FrameWork.html" class="service-card">
+                    <svg class="service-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 2.5rem; height: 2.5rem;">
+                        <rect x="14" y="18" width="72" height="64" fill="none" stroke="#4a0e12" stroke-width="5" rx="4"/>
+                        <rect x="22" y="26" width="56" height="48" fill="#f5f0e8" rx="2"/>
+                        <circle cx="38" cy="40" r="10" fill="#c5a059" opacity="0.7"/>
+                        <circle cx="58" cy="48" r="13" fill="#d4b896" opacity="0.8"/>
+                        <path d="M 25 60 Q 50 52 75 60" fill="#c5a059" opacity="0.6"/>
+                        <circle cx="17" cy="21" r="2.5" fill="#c5a059"/>
+                        <circle cx="83" cy="21" r="2.5" fill="#c5a059"/>
+                        <circle cx="17" cy="79" r="2.5" fill="#c5a059"/>
+                        <circle cx="83" cy="79" r="2.5" fill="#c5a059"/>
+                        <path d="M 35 12 Q 50 8 65 12" fill="none" stroke="#c5a059" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <h3>FrameWork</h3>
+                    <p>Your story, beautifully framed.</p>
                 </a>
             </div>
         </div>
@@ -574,9 +958,16 @@
             <h2 class="section-title">Visual Poetry</h2>
             <p class="section-subtitle">Highlights from recent celebrations</p>
             <div class="gallery-grid">
-                <div class="gallery-item"><img loading="lazy" src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding"></div>
-                <div class="gallery-item"><img loading="lazy" src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bride"></div>
-                <div class="gallery-item"><img loading="lazy" src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ceremony"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/224A2356.webp" alt="Gallery 1"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/2B5A1614.webp" alt="Gallery 2"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/DSC03816.webp" alt="Gallery 3"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/2B5A7737.webp" alt="Gallery 4"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/DSC02482.webp" alt="Gallery 5"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/_DSC4024 copy.webp" alt="Gallery 6"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/DSC04770.webp" alt="Gallery 7"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/2B5A0788.webp" alt="Gallery 8"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/DSC03048.webp" alt="Gallery 9"></div>
+                <div class="gallery-item"><img loading="lazy" src="gallery/_DSC4127 copy.webp" alt="Gallery 10"></div>
             </div>
             <div style="text-align: center; margin-top: 50px;">
                 <a href="gallery.html" class="btn btn-outline">Enter Gallery</a>
@@ -590,7 +981,7 @@
             <p class="section-subtitle">We would be honored to tell your story</p>
             <div class="contact-container">
                 <div class="contact-info">
-                    <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1.1;">Mumbai & Worldwide</h3>
+                    <h3>Mumbai Maharashtra</h3>
                     <p style="margin-bottom: 40px; color: #666; font-size: 1.1rem;">We are accepting bookings for the upcoming season. Fill out the form to chat with us directly on WhatsApp.</p>
                     <a href="https://wa.me/919820293428" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
                         <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
@@ -600,9 +991,13 @@
                         <div class="contact-icon"><i class="fab fa-instagram"></i></div>
                         <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Instagram</h4><p style="margin: 0; color: #777;">@jollystudio</p></div>
                     </a>
-                    <a href="mailto:info@jollystudio.com" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                    <a href="mailto:jollyustudio7@gmail.com" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
                         <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Email</h4><p style="margin: 0; color: #777;">info@jollystudio.com</p></div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Email</h4><p style="margin: 0; color: #777;">jollyustudio7@gmail.com</p></div>
+                    </a>
+                    <a href="https://maps.google.com/?q=Shop+No.7,8,+Lal+Bahadur+Shastri+Marg,+behind+Bus+stop,+Valmik+Nagar,+Bhandup+West,+Mumbai,+Maharashtra+400078" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Location</h4><p style="margin: 0; color: #777;">Shop No.7,8, Lal Bahadur Shastri Marg, Bhandup West, Mumbai 400078</p></div>
                     </a>
                 </div>
                 <div class="contact-form-wrapper">
@@ -613,7 +1008,12 @@
                             <option value="Wedding">Wedding</option>
                             <option value="Pre-Wedding">Pre-Wedding</option>
                             <option value="Maternity">Maternity</option>
-                            <option value="Portfolio">Portfolio</option>
+                            <option value="Engagement">Engagement</option>
+                            <option value="Products">Products</option>
+                            <option value="Birthday">Birthday</option>
+                            <option value="Babyshower">Babyshower</option>
+                            <option value="FrameWork">FrameWork</option>
+                            <option value="Baby">Baby</option>
                         </select>
                         <textarea id="message" class="form-control" rows="4" placeholder="Tell us about your event..."></textarea>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Send Inquiry</button>
@@ -625,7 +1025,9 @@
 
     <footer style="background-color: var(--primary-burgundy); color: var(--bg-cream); padding: 70px 0; text-align: center;">
         <div class="container">
-            <h2 class="logo" style="color: var(--white); margin-bottom: 20px;">Jolly<span>Studio</span></h2>
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                <img src="logo.png" alt="Jolly Studio Logo" style="height: 80px; width: auto; object-fit: contain;">
+            </div>
             <p style="opacity: 0.8; font-size: 0.9rem;">&copy; 2025 JollyStudio. Crafted with Love.</p>
         </div>
     </footer>
@@ -634,6 +1036,46 @@
 
     <script>
         (function(){
+            // Animate hero elements on load
+            window.addEventListener('load', () => {
+                const heroTopLabel = document.querySelector('.hero-top-label');
+                const heroTitle = document.querySelector('.hero-content h1');
+                const heroSubtitle = document.querySelector('.hero-subtitle');
+                const heroImage = document.querySelector('.hero-image-frame');
+                const heroDesc = document.querySelector('.hero-content p');
+                const heroBtn = document.querySelector('.hero-content .btn-primary');
+
+                setTimeout(() => {
+                    if (heroTopLabel) heroTopLabel.style.opacity = '1';
+                    if (heroTopLabel) heroTopLabel.style.transform = 'translateY(0)';
+                }, 200);
+
+                setTimeout(() => {
+                    if (heroTitle) heroTitle.style.opacity = '1';
+                    if (heroTitle) heroTitle.style.transform = 'translateY(0)';
+                }, 300);
+
+                setTimeout(() => {
+                    if (heroSubtitle) heroSubtitle.style.opacity = '1';
+                    if (heroSubtitle) heroSubtitle.style.transform = 'translateY(0)';
+                }, 400);
+
+                setTimeout(() => {
+                    if (heroImage) heroImage.style.opacity = '1';
+                    if (heroImage) heroImage.style.transform = 'translateY(0) scale(1)';
+                }, 500);
+
+                setTimeout(() => {
+                    if (heroDesc) heroDesc.style.opacity = '1';
+                    if (heroDesc) heroDesc.style.transform = 'translateY(0)';
+                }, 600);
+
+                setTimeout(() => {
+                    if (heroBtn) heroBtn.style.opacity = '1';
+                    if (heroBtn) heroBtn.style.transform = 'translateY(0)';
+                }, 700);
+            });
+
             const sideMenu = document.querySelector('.side-menu');
             const sideMenuTrigger = document.querySelector('.side-menu-trigger');
             const navbar = document.querySelector('.navbar');
@@ -703,18 +1145,6 @@
                 });
             }, { threshold: 0.2 });
             counters.forEach(c => counterObserver.observe(c));
-
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            filterBtns.forEach(btn => btn.addEventListener('click', () => {
-                filterBtns.forEach(b=>b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.getAttribute('data-filter');
-                galleryItems.forEach(it => {
-                    const cat = it.getAttribute('data-cat');
-                    if (f === 'all' || f === cat) it.style.display = 'inline-block'; else it.style.display = 'none';
-                });
-            }));
 
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = lightbox ? lightbox.querySelector('img') : null;
