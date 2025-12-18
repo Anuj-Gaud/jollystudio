@@ -144,7 +144,7 @@
             position: relative;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12); 
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border: 2px solid var(--primary-gold); 
+            border: 2px solid black; 
             background: var(--white);
             cursor: pointer;
         }
@@ -341,7 +341,7 @@
 
             function loadImages() {
                 // Animation logic removed for instant loading
-                const nextBatch = images.slice(loaded, loaded + batch);
+                const nextBatch = images.slice(loaded);
                 nextBatch.forEach((name, i) => {
                     const card = document.createElement('div');
                     card.className = 'photo-card';
