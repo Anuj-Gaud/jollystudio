@@ -41,6 +41,8 @@
             transition: transform 0.3s ease;
         }
 
+        .page-header.hidden { transform: translateY(-100%); }
+
         .header-flex { 
             display: flex; 
             justify-content: space-between; 
@@ -236,6 +238,26 @@
             transition: 0.3s;
         }
 
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 3010;
+        }
+
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.5); }
+
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
 
@@ -322,16 +344,22 @@
 
         (function() {
             const FOLDER = 'maternity';
-            const images = ['01 (3).webp', '01 (5).webp', '01 (6).webp', '02 (4).webp', '02 (46).webp', '02 (50).webp', '02 (7).webp', '02 (70).webp', '02 (71).webp', '02 (80).webp', '08  8x10  1copy  471.webp', '09  8x10  1copy  471.webp', 'DSC03917.webp', 'DSC04035.webp', 'NEW 2025 (1).webp', 'NEW 2025 (2).webp', 'NEW 2025 (3).webp'];
+            let images = ['01 (3).webp', '01 (4).webp', '01 (5).webp', '01 (6).webp', '02 (4).webp', '02 (46).webp', '02 (50).webp', '02 (7).webp', '02 (70).webp', '02 (71).webp', '02 (72).webp', '02 (80).webp', '03  8x10  1copy  471.webp', '04  8x10  1copy  471.webp', '04 (3).webp', '05  8x10  1copy  471.webp', '06   8x12 1copy   sunny.webp', '06  8x10  1copy  471.webp', '08  8x10  1copy  471.webp', '09  8x10  1copy  471.webp', '14  8x12  1copy  2853.webp', 'DSC03917.webp', 'DSC03944.webp', 'DSC04035.webp', 'NEW 2025 (1).webp', 'NEW 2025 (2).webp', 'NEW 2025 (3).webp'];
+            
+            // Shuffle images using Fisher-Yates algorithm
+            for (let i = images.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [images[i], images[j]] = [images[j], images[i]];
+            }
             
             let loaded = 0;
-            const batch = 6;
+            const batch = 8;
             const grid = document.getElementById('photoGrid');
             const loadBtn = document.getElementById('loadMoreBtn');
 
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox';
-            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
+            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-close"><i class="fas fa-times"></i></button><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
             document.body.appendChild(lightbox);
             const lbImg = lightbox.querySelector('img');
             let currentIdx = 0;
@@ -342,7 +370,7 @@
             }
 
             function loadImages() {
-                const nextBatch = images.slice(loaded);
+                const nextBatch = images.slice(loaded, loaded + batch);
                 nextBatch.forEach((name, i) => {
                     const card = document.createElement('div');
                     card.className = 'photo-card';
@@ -354,16 +382,28 @@
                     grid.appendChild(card);
                 });
                 loaded += nextBatch.length;
-                if(loaded >= images.length) document.getElementById('loadMoreContainer').innerHTML = '<p style="color:var(--primary-gold); font-family: serif; font-weight: 600;">All images loaded</p>';
+                if(loaded >= images.length) loadBtn.style.display = 'none';
             }
 
             loadBtn.onclick = loadImages;
             lightbox.onclick = (e) => { if(e.target === lightbox || e.target === lbImg) lightbox.classList.remove('visible'); };
+            lightbox.querySelector('.lightbox-close').onclick = (e) => { e.stopPropagation(); lightbox.classList.remove('visible'); };
             lightbox.querySelector('.lightbox-next').onclick = (e) => { e.stopPropagation(); updateLightbox(currentIdx + 1); };
             lightbox.querySelector('.lightbox-prev').onclick = (e) => { e.stopPropagation(); updateLightbox(currentIdx - 1); };
 
             loadImages();
         })();
+
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.page-header');
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
     </script>
 </body>
 </html>

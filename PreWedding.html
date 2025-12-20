@@ -41,6 +41,8 @@
             transition: transform 0.3s ease;
         }
 
+        .page-header.hidden { transform: translateY(-100%); }
+
         .header-flex { 
             display: flex; 
             justify-content: space-between; 
@@ -236,6 +238,26 @@
             transition: 0.3s;
         }
 
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 3010;
+        }
+
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.5); }
+
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
 
@@ -321,16 +343,22 @@
 
         (function() {
             const FOLDER = 'prewedding';
-            const images = ['DSC02607.webp', 'DSC02643.webp', 'DSC02661.webp', 'DSC02743.webp', 'DSC02759.webp', 'DSC02819.webp', 'DSC02935.webp', 'DSC03048.webp', 'DSC03066.webp', 'DSC03076.webp', 'DSC03281.webp', 'DSC03296.webp', 'DSC03314.webp', 'DSC03357.webp', 'DSC03438.webp', 'DSC03450.webp', 'DSC03512.webp', 'DSC03575.webp', 'DSC03798.webp', 'DSC03831.webp', 'DSC03841.webp', 'DSC03981.webp', 'DSC04010.webp', 'DSC04068 copy.webp', 'DSC04302.webp', 'DSC04898.webp'];
+            let images = ['A78K3064 copy.webp', 'DJI_0205.webp', 'DSC00479 1_resize.webp', 'DSC00502 copy_resize.webp', 'DSC00945 copy.webp', 'DSC02196.webp', 'DSC02215 copy.webp', 'DSC02404 copy.webp', 'DSC02426 copy.webp', 'DSC02607.webp', 'DSC02643.webp', 'DSC02661.webp', 'DSC02743.webp', 'DSC02759.webp', 'DSC02819.webp', 'DSC02935.webp', 'DSC03048.webp', 'DSC03066.webp', 'DSC03076.webp', 'DSC03281.webp', 'DSC03296.webp', 'DSC03314.webp', 'DSC03357.webp', 'DSC03438.webp', 'DSC03450.webp', 'DSC03512.webp', 'DSC03575.webp', 'DSC03798.webp', 'DSC03831.webp', 'DSC03841.webp', 'DSC03981.webp', 'DSC04010.webp', 'DSC04068 copy.webp', 'DSC04302.webp', 'DSC04898.webp', 'DSC05873.webp', 'DSC09485 1_resize.webp', 'DSC09596 copy_resize.webp', 'ggg.webp', '_DSC1063 copy.webp'];
+            
+            // Shuffle images using Fisher-Yates algorithm
+            for (let i = images.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [images[i], images[j]] = [images[j], images[i]];
+            }
             
             let loaded = 0;
-            const batch = 6;
+            const batch = 8;
             const grid = document.getElementById('photoGrid');
             const loadBtn = document.getElementById('loadMoreBtn');
 
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox';
-            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
+            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-close"><i class="fas fa-times"></i></button><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
             document.body.appendChild(lightbox);
             const lbImg = lightbox.querySelector('img');
             let currentIdx = 0;
@@ -342,7 +370,7 @@
 
             function loadImages() {
                 // Loading animation and artificial delay removed for instant loading
-                const nextBatch = images.slice(loaded);
+                const nextBatch = images.slice(loaded, loaded + batch);
                 nextBatch.forEach((name, i) => {
                     const card = document.createElement('div');
                     card.className = 'photo-card';
@@ -354,14 +382,25 @@
                     grid.appendChild(card);
                 });
                 loaded += nextBatch.length;
-                if(loaded >= images.length) document.getElementById('loadMoreContainer').innerHTML = '<p style="color:var(--primary-gold); font-family: serif; font-weight: 600;">All images loaded</p>';
+                if(loaded >= images.length) loadBtn.style.display = 'none';
             }
 
             loadBtn.onclick = loadImages;
             lightbox.onclick = (e) => { if(e.target === lightbox || e.target === lbImg) lightbox.classList.remove('visible'); };
+            lightbox.querySelector('.lightbox-close').onclick = (e) => { e.stopPropagation(); lightbox.classList.remove('visible'); };
             lightbox.querySelector('.lightbox-next').onclick = (e) => { e.stopPropagation(); updateLightbox(currentIdx + 1); };
             lightbox.querySelector('.lightbox-prev').onclick = (e) => { e.stopPropagation(); updateLightbox(currentIdx - 1); };
-
+            // Header hide/show scroll logic
+            let lastScrollY = window.scrollY;
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('.page-header');
+                if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+                lastScrollY = window.scrollY;
+            });
             loadImages();
         })();
     </script>

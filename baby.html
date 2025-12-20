@@ -245,6 +245,26 @@
             transition: 0.3s;
         }
 
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 3010;
+        }
+
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.5); }
+
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
 
@@ -341,17 +361,23 @@
         (function() {
             const FOLDER = 'baby';
             // List of images from baby folder
-            const images = ['1.webp', '2.webp', '3.webp', '4.webp', '5.webp', '6.webp', '7.webp', '8.webp', '9.webp', '10.webp'];
+            let images = ['1.webp', '16.webp', '17.webp', '18.webp', '19.webp', '2.webp', '20.webp', '21.webp', '22.webp', '23.webp', '24.webp', '25.webp', '26.webp', '27.webp', '28.webp', '29.webp', '3.webp', '30.webp', '32.webp', '4.webp', '40.webp', '41.webp', '42.webp', '44.webp', '45.webp', '46.webp', '48.webp', '49.webp', '5.webp', '50.webp', '51.webp', '53.webp', '54.webp', '58.webp', '6.webp', '60.webp', '61.webp', '62.webp', '7.webp', '8.webp', '9.webp'];
+            
+            // Shuffle images using Fisher-Yates algorithm
+            for (let i = images.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [images[i], images[j]] = [images[j], images[i]];
+            }
 
             let loaded = 0;
-            const batch = 6;
+            const batch = 8;
             const grid = document.getElementById('photoGrid');
             const loadBtn = document.getElementById('loadMoreBtn');
 
             // Lightbox dynamic creation
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox';
-            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
+            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-close"><i class="fas fa-times"></i></button><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
             document.body.appendChild(lightbox);
             const lbImg = lightbox.querySelector('img');
             let currentIdx = 0;
@@ -362,7 +388,7 @@
             }
 
             function loadImages() {
-                const nextBatch = images.slice(loaded);
+                const nextBatch = images.slice(loaded, loaded + batch);
                 nextBatch.forEach((name, i) => {
                     const card = document.createElement('div');
                     card.className = 'photo-card';
@@ -388,6 +414,12 @@
             // Close lightbox on background click
             lightbox.onclick = (e) => { 
                 if(e.target === lightbox || e.target === lbImg) lightbox.classList.remove('visible'); 
+            };
+            
+            // Close button handler
+            lightbox.querySelector('.lightbox-close').onclick = (e) => { 
+                e.stopPropagation(); 
+                lightbox.classList.remove('visible'); 
             };
             
             // Navigate lightbox

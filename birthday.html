@@ -41,6 +41,8 @@
             transition: transform 0.3s ease;
         }
 
+        .page-header.hidden { transform: translateY(-100%); }
+
         .header-flex { 
             display: flex; 
             justify-content: space-between; 
@@ -237,6 +239,26 @@
             transition: 0.3s;
         }
 
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 3010;
+        }
+
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.5); }
+
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
 
@@ -320,16 +342,22 @@
 
         (function() {
             const FOLDER = 'birthday';
-            const images = ['224A2356.webp', '224A2358.webp', '2B5A4214 - Copy.webp', 'IMG_0421.webp', 'IMG_0441.webp', 'IMG_0460.webp', 'IMG_0488.webp', 'IMG_1029.webp', 'IMG_1070.webp', 'IMG_1556.webp', 'IMG_1577.webp', 'IMG_1582.webp', 'IMG_1594.webp', 'IMG_1613.webp', 'IMG_5713.webp', 'IMG_5737.webp'];
+            let images = ['224A2037.webp', '224A2356.webp', '224A2358.webp', '2B5A2052.webp', '2B5A4214 - Copy.webp', '2B5A4263 - Copy.webp', '2B5A4273 - Copy.webp', '2B5A4884 - Copy.webp', 'DSC01220.webp', 'DSC01455.webp', 'DSC01497.webp', 'DSC01528.webp', 'DSC01542.webp', 'DSC01564.webp', 'IMG_0291.webp', 'IMG_0421.webp', 'IMG_0441.webp', 'IMG_0460.webp', 'IMG_0488.webp', 'IMG_0490.webp', 'IMG_0491.webp', 'IMG_1008.webp', 'IMG_1018.webp', 'IMG_1026.webp', 'IMG_1029.webp', 'IMG_1070.webp', 'IMG_1159.webp', 'IMG_1556.webp', 'IMG_1577.webp', 'IMG_1582.webp', 'IMG_1594.webp', 'IMG_1613.webp', 'IMG_5713.webp', 'IMG_5737.webp'];
+            
+            // Shuffle images using Fisher-Yates algorithm
+            for (let i = images.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [images[i], images[j]] = [images[j], images[i]];
+            }
             
             let loaded = 0;
-            const batch = 6;
+            const batch = 8;
             const grid = document.getElementById('photoGrid');
             const loadBtn = document.getElementById('loadMoreBtn');
 
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox';
-            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
+            lightbox.innerHTML = `<div class="lightbox-container"><button class="lightbox-close"><i class="fas fa-times"></i></button><button class="lightbox-nav-btn lightbox-prev"><i class="fas fa-chevron-left"></i></button><img src=""><button class="lightbox-nav-btn lightbox-next"><i class="fas fa-chevron-right"></i></button></div>`;
             document.body.appendChild(lightbox);
             const lbImg = lightbox.querySelector('img');
             let currentIdx = 0;
@@ -341,7 +369,7 @@
 
             function loadImages() {
                 // Instantly load without loading animation
-                const nextBatch = images.slice(loaded);
+                const nextBatch = images.slice(loaded, loaded + batch);
                 nextBatch.forEach((name, i) => {
                     const card = document.createElement('div');
                     card.className = 'photo-card';
@@ -353,13 +381,26 @@
                     grid.appendChild(card);
                 });
                 loaded += nextBatch.length;
-                if(loaded >= images.length) document.getElementById('loadMoreContainer').innerHTML = '<p style="color:var(--primary-gold); font-family: serif; font-weight: 600;">All images loaded</p>';
+                if(loaded >= images.length) loadBtn.style.display = 'none';
             }
 
             loadBtn.onclick = loadImages;
             lightbox.onclick = (e) => { if(e.target === lightbox || e.target === lbImg) lightbox.classList.remove('visible'); };
+            lightbox.querySelector('.lightbox-close').onclick = (e) => { e.stopPropagation(); lightbox.classList.remove('visible'); };
             lightbox.querySelector('.lightbox-next').onclick = (e) => { e.stopPropagation(); updateLightbox(currentIdx + 1); };
             lightbox.querySelector('.lightbox-prev').onclick = (e) => { e.stopPropagation(); updateLightbox(currentIdx - 1); };
+
+            // Header hide/show scroll logic
+            let lastScrollY = window.scrollY;
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('.page-header');
+                if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+                lastScrollY = window.scrollY;
+            });
 
             loadImages();
         })();

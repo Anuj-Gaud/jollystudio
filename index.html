@@ -45,7 +45,7 @@
 
         /* Buttons */
         .btn {
-            display: inline-block; padding: 14px 45px; font-size: 0.9rem; 
+            display: inline-block; padding: 18px 50px; font-size: 1rem; 
             font-family: 'Playfair Display', serif; font-weight: 600;
             cursor: pointer; transition: var(--transition);
             text-transform: uppercase; letter-spacing: 2px;
@@ -336,6 +336,8 @@
         .lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:4000; opacity:0; pointer-events:none; transition: opacity 0.3s ease; }
         .lightbox.visible { opacity:1; pointer-events:auto; }
         .lightbox img { max-width:90%; max-height:90%; border-radius:8px; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.3); color: white; border: 2px solid white; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 3010; }
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.5); }
 
         /* --- SERVICES --- */
         .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
@@ -405,7 +407,7 @@
             color: var(--primary-burgundy);
         }
         .contact-icon { width: 55px; height: 55px; background: var(--bg-cream); border: 1px solid var(--primary-burgundy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-burgundy); font-size: 1.3rem; margin-right: 20px; }
-        .form-control { width: 100%; padding: 15px; border: 1px solid #e0d0b8; background-color: var(--white); font-family: 'Playfair Display', serif; margin-bottom: 20px; border-radius: 4px; }
+        .form-control { width: 100%; padding: 20px; border: 1px solid #e0d0b8; background-color: var(--white); font-family: 'Playfair Display', serif; margin-bottom: 25px; border-radius: 4px; font-size: 1.05rem; }
         
         .float-wa { position: fixed; width: 65px; height: 65px; bottom: 35px; right: 35px; background-color: var(--primary-burgundy); color: var(--white); border-radius: 50%; font-size: 32px; box-shadow: 0 5px 20px rgba(74, 14, 18, 0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; border: 2px solid var(--primary-gold); }
 
@@ -801,8 +803,8 @@
         </div>
 
         <video autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableRemotePlayback controlsList="nodownload noremoteplayback nofullscreen" draggable="false" oncontextmenu="return false;">
-            <source src="video.mov" type="video/quicktime">
-            <source src="video.mov" type="video/mp4">
+            <source src="video.webm" type="video/quicktime">
+            <source src="video.webm" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         
@@ -814,6 +816,7 @@
     </section>
 
     <div id="lightbox" class="lightbox" aria-hidden="true">
+        <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
         <img src="" alt="Expanded">
     </div>
 
@@ -825,9 +828,10 @@
             <div style="flex: 1; min-width: 300px; position: relative;">
                 <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 2px solid black; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 10px;" 
-                        src="https://www.youtube.com/embed/s1GLofAAMQg?autoplay=1&mute=1&loop=1&playlist=s1GLofAAMQg" 
+                        src="https://www.youtube.com/embed/azT3CHeNlqg?si=BOZJ7r0IRknAHrnm" 
                         title="JollyStudio Story" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen>
                     </iframe>
                 </div>
@@ -955,7 +959,7 @@
         <div class="container">
             <h2 class="section-title">Visual Poetry</h2>
             <p class="section-subtitle">Highlights from recent celebrations</p>
-            <div class="gallery-grid">
+            <div class="gallery-grid" id="galleryGrid">
                 <div class="gallery-item"><img loading="lazy" src="gallery/224A2356.webp" alt="Gallery 1"></div>
                 <div class="gallery-item"><img loading="lazy" src="gallery/2B5A1614.webp" alt="Gallery 2"></div>
                 <div class="gallery-item"><img loading="lazy" src="gallery/DSC03816.webp" alt="Gallery 3"></div>
@@ -964,11 +968,11 @@
                 <div class="gallery-item"><img loading="lazy" src="gallery/_DSC4024 copy.webp" alt="Gallery 6"></div>
                 <div class="gallery-item"><img loading="lazy" src="gallery/DSC04770.webp" alt="Gallery 7"></div>
                 <div class="gallery-item"><img loading="lazy" src="gallery/2B5A0788.webp" alt="Gallery 8"></div>
-                <div class="gallery-item"><img loading="lazy" src="gallery/DSC03048.webp" alt="Gallery 9"></div>
-                <div class="gallery-item"><img loading="lazy" src="gallery/_DSC4127 copy.webp" alt="Gallery 10"></div>
+                <div class="gallery-item" style="display: none;"><img loading="lazy" src="gallery/DSC03048.webp" alt="Gallery 9"></div>
+                <div class="gallery-item" style="display: none;"><img loading="lazy" src="gallery/_DSC4127 copy.webp" alt="Gallery 10"></div>
             </div>
             <div style="text-align: center; margin-top: 50px;">
-                <a href="gallery.html" class="btn btn-outline">Enter Gallery</a>
+                <a href="gallery.html" class="btn btn-primary">Enter Gallery</a>
             </div>
         </div>
     </section>
@@ -980,22 +984,33 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <h3>Mumbai Maharashtra</h3>
-                    <p style="margin-bottom: 40px; color: #666; font-size: 1.1rem;">We are accepting bookings for the upcoming season. Fill out the form to chat with us directly on WhatsApp.</p>
-                    <a href="https://wa.me/919820293428" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                    <p style="margin-bottom: 25px; color: #666; font-size: 1.1rem;">We are accepting bookings for the upcoming season. Fill out the form to chat with us directly on WhatsApp.</p>
+                    <a href="https://wa.me/919820293428" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; transition: 0.3s ease;">
                         <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
                         <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">WhatsApp</h4><p style="margin: 0; color: #777;">+91 98202 93428</p></div>
                     </a>
-                    <a href="https://instagram.com/jollystudio" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
                         <div class="contact-icon"><i class="fab fa-instagram"></i></div>
-                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Instagram</h4><p style="margin: 0; color: #777;">@jollystudio</p></div>
-                    </a>
-                    <a href="mailto:jollyustudio7@gmail.com" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                        <div>
+                            <h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Instagram</h4>
+                            <p style="margin: 5px 0 0 0; color: #777;">
+                                <a href="https://instagram.com/jollystudio" target="_blank" style="color: #777; text-decoration: none; transition: 0.3s ease;">@jollystudio</a> • 
+                                <a href="https://www.instagram.com/jollystudio_photoworld/" target="_blank" style="color: #777; text-decoration: none; transition: 0.3s ease;">@jollystudio_photoworld</a> • 
+                                <a href="https://www.instagram.com/jolly_studio_products/" target="_blank" style="color: #777; text-decoration: none; transition: 0.3s ease;">@jolly_studio_products</a>
+                            </p>
+                        </div>
+                    </div>
+                    <a href="mailto:jollyustudio7@gmail.com" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; transition: 0.3s ease;">
                         <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                         <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Email</h4><p style="margin: 0; color: #777;">jollyustudio7@gmail.com</p></div>
                     </a>
-                    <a href="https://maps.google.com/?q=Shop+No.7,8,+Lal+Bahadur+Shastri+Marg,+behind+Bus+stop,+Valmik+Nagar,+Bhandup+West,+Mumbai,+Maharashtra+400078" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s ease;">
+                    <a href="https://maps.google.com/?q=Shop+No.7,8,+Lal+Bahadur+Shastri+Marg,+behind+Bus+stop,+Valmik+Nagar,+Bhandup+West,+Mumbai,+Maharashtra+400078" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; transition: 0.3s ease;">
                         <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                         <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">Location</h4><p style="margin: 0; color: #777;">Shop No.7,8, Lal Bahadur Shastri Marg, Bhandup West, Mumbai 400078</p></div>
+                    </a>
+                    <a href="https://www.youtube.com/@jollystudio4062/videos" target="_blank" style="text-decoration: none; display: flex; align-items: center; margin-bottom: 20px; cursor: pointer; transition: 0.3s ease;">
+                        <div class="contact-icon"><i class="fab fa-youtube"></i></div>
+                        <div><h4 style="margin: 0; font-size: 1.2rem; color: var(--text-dark);">YouTube</h4><p style="margin: 0; color: #777;">@jollystudio4062</p></div>
                     </a>
                 </div>
                 <div class="contact-form-wrapper">
@@ -1154,7 +1169,20 @@
                     lightbox.setAttribute('aria-hidden','false');
                 });
             });
-            if (lightbox) lightbox.addEventListener('click', () => { lightbox.classList.remove('visible'); lightbox.setAttribute('aria-hidden','true'); });
+            if (lightbox) {
+                lightbox.addEventListener('click', (e) => { 
+                    if (e.target === lightbox || e.target === lightboxImg) {
+                        lightbox.classList.remove('visible'); 
+                        lightbox.setAttribute('aria-hidden','true');
+                    }
+                });
+                const closeBtn = lightbox.querySelector('.lightbox-close');
+                if (closeBtn) closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    lightbox.classList.remove('visible');
+                    lightbox.setAttribute('aria-hidden','true');
+                });
+            }
 
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -1169,6 +1197,23 @@
             sections.forEach(s => navObserver.observe(s));
 
             const cta = document.querySelector('.btn-primary'); if (cta) cta.classList.add('pulse');
+
+            // Shuffle gallery images on page load
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (galleryGrid) {
+                const galleryItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
+                // Fisher-Yates shuffle algorithm
+                for (let i = galleryItems.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [galleryItems[i], galleryItems[j]] = [galleryItems[j], galleryItems[i]];
+                }
+                // Re-append shuffled items to grid
+                galleryItems.forEach(item => galleryGrid.appendChild(item));
+                // Show only first 8 items
+                galleryItems.forEach((item, index) => {
+                    item.style.display = index < 8 ? '' : 'none';
+                });
+            }
 
             const form = document.getElementById('whatsappForm');
             if (form) {
