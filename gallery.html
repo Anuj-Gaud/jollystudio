@@ -324,9 +324,20 @@
     <script>
         function toggleSideMenu() { document.querySelector('.side-menu').classList.toggle('visible'); }
 
+        // Preload all images in the background
+        function preloadImages(imageList, folder) {
+            imageList.forEach(filename => {
+                const img = new Image();
+                img.src = `${folder}/${filename}`;
+            });
+        }
+
         (function() {
             const FOLDER = 'gallery';
             const images = ['01 (3).webp', '01 (5).webp', '01 (6).webp', '02 (4).webp', '02 (46).webp', '02 (50).webp', '02 (7).webp', '02 (70).webp', '02 (71).webp', '02 (80).webp', '08  8x10  1copy  471.webp', '09  8x10  1copy  471.webp', '0W5A7131 copy.webp', '0W5A7149 copy.webp', '1.webp', '13.webp', '14.webp', '15.webp', '18.webp', '19.webp', '2.webp', '20.webp', '224A2356.webp', '224A2358.webp', '2B5A0119.webp', '2B5A0127.webp', '2B5A0170.webp', '2B5A0788.webp', '2B5A1614.webp', '2B5A2810 (1).webp', '2B5A2810.webp', '2B5A3120.webp', '2B5A3721.webp', '2B5A3727.webp', '2B5A3759.webp', '2B5A3773.webp', '2B5A4214 - Copy.webp', '2B5A4242.webp', '2B5A4491.webp', '2B5A7168.webp', '2B5A7258.webp', '2B5A7309.webp', '2B5A7465.webp', '2B5A7499.webp', '2B5A7549.webp', '2B5A7659.webp', '2B5A7685.webp', '2B5A7708.webp', '2B5A7737.webp', '3.webp', '4.webp', '40.webp', '41.webp', '42.webp', '43.webp', '5.webp', '6.webp', '62.webp', '63.webp', '66.webp', '69.webp', '7.webp', '70.webp', '8.webp', '9.webp', 'DSC00909.webp', 'DSC00937 copy.webp', 'DSC00944.webp', 'DSC00946 copy.webp', 'DSC00959.webp', 'DSC01219 copy.webp', 'DSC01224.webp', 'DSC01236 copy.webp', 'DSC01237.webp', 'DSC01262.webp', 'DSC02102.webp', 'DSC02125.webp', 'DSC02144.webp', 'DSC02244.webp', 'DSC02482.webp', 'DSC02607.webp', 'DSC02643.webp', 'DSC02661.webp', 'DSC02743.webp', 'DSC02759.webp', 'DSC02819.webp', 'DSC02935.webp', 'DSC03048.webp', 'DSC03066.webp', 'DSC03076.webp', 'DSC03281.webp', 'DSC03296.webp', 'DSC03314.webp', 'DSC03357.webp', 'DSC03438.webp', 'DSC03450.webp', 'DSC03512.webp', 'DSC03575.webp', 'DSC03798.webp', 'DSC03816.webp', 'DSC03831.webp', 'DSC03841.webp', 'DSC03917.webp', 'DSC03981.webp', 'DSC04010.webp', 'DSC04035.webp', 'DSC04068 copy.webp', 'DSC04302.webp', 'DSC04770.webp', 'DSC04898.webp', 'IMG_0421.webp', 'IMG_0441.webp', 'IMG_0460.webp', 'IMG_0488.webp', 'IMG_1029.webp', 'IMG_1070.webp', 'IMG_1556.webp', 'IMG_1577.webp', 'IMG_1582.webp', 'IMG_1594.webp', 'IMG_1613.webp', 'IMG_5713.webp', 'IMG_5737.webp', 'NEW 2025 (1).webp', 'NEW 2025 (2).webp', 'NEW 2025 (3).webp', '_DSC0250 copy.webp', '_DSC0866 copy.webp', '_DSC1014 copy.webp', '_DSC4024 copy.webp', '_DSC4048 copy.webp', '_DSC4050 copy_pp copy.webp', '_DSC4089 copy.webp', '_DSC4127 copy.webp', '_DSC5433.webp', '_DSC5441.webp', '_DSC5768.webp', '_DSC6315.webp', 'ś.webp'];
+            
+            // Start preloading images immediately
+            preloadImages(images, FOLDER);
             
             // Shuffle
             for (let i = images.length - 1; i > 0; i--) {

@@ -342,9 +342,20 @@
     <script>
         function toggleSideMenu() { document.querySelector('.side-menu').classList.toggle('visible'); }
 
+        // Preload all images in the background
+        function preloadImages(imageList, folder) {
+            imageList.forEach(filename => {
+                const img = new Image();
+                img.src = `${folder}/${filename}`;
+            });
+        }
+
         (function() {
             const FOLDER = 'maternity';
             let images = ['01 (3).webp', '01 (4).webp', '01 (5).webp', '01 (6).webp', '02 (4).webp', '02 (46).webp', '02 (50).webp', '02 (7).webp', '02 (70).webp', '02 (71).webp', '02 (72).webp', '02 (80).webp', '03  8x10  1copy  471.webp', '04  8x10  1copy  471.webp', '04 (3).webp', '05  8x10  1copy  471.webp', '06   8x12 1copy   sunny.webp', '06  8x10  1copy  471.webp', '08  8x10  1copy  471.webp', '09  8x10  1copy  471.webp', '14  8x12  1copy  2853.webp', 'DSC03917.webp', 'DSC03944.webp', 'DSC04035.webp', 'NEW 2025 (1).webp', 'NEW 2025 (2).webp', 'NEW 2025 (3).webp'];
+            
+            // Start preloading images immediately
+            preloadImages(images, FOLDER);
             
             // Shuffle images using Fisher-Yates algorithm
             for (let i = images.length - 1; i > 0; i--) {

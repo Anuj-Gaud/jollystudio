@@ -340,9 +340,20 @@
     <script>
         function toggleSideMenu() { document.querySelector('.side-menu').classList.toggle('visible'); }
 
+        // Preload all images in the background
+        function preloadImages(imageList, folder) {
+            imageList.forEach(filename => {
+                const img = new Image();
+                img.src = `${folder}/${filename}`;
+            });
+        }
+
         (function() {
             const FOLDER = 'wedding';
-            let images = ['2B5A0119.webp', '2B5A0127.webp', '2B5A0170.webp', '2B5A2810 (1).webp', '2B5A2810.webp', '2B5A3120.webp', '2B5A3721.webp', '2B5A3727.webp', '2B5A3759.webp', '2B5A3773.webp', '2B5A4242.webp', '2B5A4491.webp', '2B5A7168.webp', '2B5A7258.webp', '2B5A7309.webp', '2B5A7465.webp', '2B5A7499.webp', '2B5A7549.webp', '2B5A7659.webp', '2B5A7685.webp', '2B5A7708.webp', 'DSC05604 copy.webp', 'DSC06546.webp', 'DSC06695.webp', 'DSC06928 copy.webp', 'DSC07002 copy.webp', 'DSC07003.webp', 'IMG_5497.webp', 'IMG_5501.webp', 'IMG_5697.webp', 'IMG_5761.webp', 'IMG_5796.webp', 'MWC_0103.webp', 'MWC_0111.webp', 'MWC_0131.webp', 'MWC_0377.webp', 'MWC_0463.webp', 'MWC_1064.webp', 'MWC_1096.webp', 'MWC_1113.webp', 'MWC_1209.webp', 'MWC_1386.webp', 'MWC_1488.webp', '_DSC0250 copy.webp', '_DSC0866 copy.webp', '_DSC1014 copy.webp', '_DSC5433.webp', '_DSC5441.webp', '_DSC5768.webp', '_DSC6315.webp'];
+            let images = ['2B5A0119.webp', '2B5A0127.webp', '2B5A3721.webp', '2B5A3727.webp', '2B5A3759.webp', '2B5A3773.webp', '2B5A4242.webp', '2B5A4491.webp', '2B5A7168.webp', '2B5A7258.webp', '2B5A7309.webp', '2B5A7465.webp', '2B5A7499.webp', '2B5A7549.webp', '2B5A7659.webp', '2B5A7685.webp', '2B5A7708.webp', 'DSC05604 copy.webp', 'DSC06546.webp', 'DSC06695.webp', 'DSC06928 copy.webp', 'DSC07002 copy.webp', 'DSC07003.webp', 'IMG_5497.webp', 'IMG_5501.webp', 'IMG_5697.webp', 'IMG_5761.webp', 'IMG_5796.webp', 'MWC_0103.webp', 'MWC_0111.webp', 'MWC_0131.webp', 'MWC_0377.webp', 'MWC_0463.webp', 'MWC_1064.webp', 'MWC_1096.webp', 'MWC_1113.webp', 'MWC_1209.webp', 'MWC_1386.webp', 'MWC_1488.webp', '_DSC0250 copy.webp', '_DSC0866 copy.webp', '_DSC1014 copy.webp', '_DSC5433.webp', '_DSC5441.webp', '_DSC5768.webp', '_DSC6315.webp'];
+            
+            // Start preloading images immediately
+            preloadImages(images, FOLDER);
             
             // Shuffle images using Fisher-Yates algorithm
             for (let i = images.length - 1; i > 0; i--) {

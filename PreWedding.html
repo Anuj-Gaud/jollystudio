@@ -341,9 +341,20 @@
     <script>
         function toggleSideMenu() { document.querySelector('.side-menu').classList.toggle('visible'); }
 
+        // Preload all images in the background
+        function preloadImages(imageList, folder) {
+            imageList.forEach(filename => {
+                const img = new Image();
+                img.src = `${folder}/${filename}`;
+            });
+        }
+
         (function() {
             const FOLDER = 'prewedding';
             let images = ['A78K3064 copy.webp', 'DJI_0205.webp', 'DSC00479 1_resize.webp', 'DSC00502 copy_resize.webp', 'DSC00945 copy.webp', 'DSC02196.webp', 'DSC02215 copy.webp', 'DSC02404 copy.webp', 'DSC02426 copy.webp', 'DSC02607.webp', 'DSC02643.webp', 'DSC02661.webp', 'DSC02743.webp', 'DSC02759.webp', 'DSC02819.webp', 'DSC02935.webp', 'DSC03048.webp', 'DSC03066.webp', 'DSC03076.webp', 'DSC03281.webp', 'DSC03296.webp', 'DSC03314.webp', 'DSC03357.webp', 'DSC03438.webp', 'DSC03450.webp', 'DSC03512.webp', 'DSC03575.webp', 'DSC03798.webp', 'DSC03831.webp', 'DSC03841.webp', 'DSC03981.webp', 'DSC04010.webp', 'DSC04068 copy.webp', 'DSC04302.webp', 'DSC04898.webp', 'DSC05873.webp', 'DSC09485 1_resize.webp', 'DSC09596 copy_resize.webp', 'ggg.webp', '_DSC1063 copy.webp'];
+            
+            // Start preloading images immediately
+            preloadImages(images, FOLDER);
             
             // Shuffle images using Fisher-Yates algorithm
             for (let i = images.length - 1; i > 0; i--) {

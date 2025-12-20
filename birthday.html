@@ -340,9 +340,20 @@
     <script>
         function toggleSideMenu() { document.querySelector('.side-menu').classList.toggle('visible'); }
 
+        // Preload all images in the background
+        function preloadImages(imageList, folder) {
+            imageList.forEach(filename => {
+                const img = new Image();
+                img.src = `${folder}/${filename}`;
+            });
+        }
+
         (function() {
             const FOLDER = 'birthday';
             let images = ['224A2037.webp', '224A2356.webp', '224A2358.webp', '2B5A2052.webp', '2B5A4214 - Copy.webp', '2B5A4263 - Copy.webp', '2B5A4273 - Copy.webp', '2B5A4884 - Copy.webp', 'DSC01220.webp', 'DSC01455.webp', 'DSC01497.webp', 'DSC01528.webp', 'DSC01542.webp', 'DSC01564.webp', 'IMG_0291.webp', 'IMG_0421.webp', 'IMG_0441.webp', 'IMG_0460.webp', 'IMG_0488.webp', 'IMG_0490.webp', 'IMG_0491.webp', 'IMG_1008.webp', 'IMG_1018.webp', 'IMG_1026.webp', 'IMG_1029.webp', 'IMG_1070.webp', 'IMG_1159.webp', 'IMG_1556.webp', 'IMG_1577.webp', 'IMG_1582.webp', 'IMG_1594.webp', 'IMG_1613.webp', 'IMG_5713.webp', 'IMG_5737.webp'];
+            
+            // Start preloading images immediately
+            preloadImages(images, FOLDER);
             
             // Shuffle images using Fisher-Yates algorithm
             for (let i = images.length - 1; i > 0; i--) {

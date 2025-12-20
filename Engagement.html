@@ -358,10 +358,21 @@
             document.querySelector('.side-menu').classList.toggle('visible');
         }
 
+        // Preload all images in the background
+        function preloadImages(imageList, folder) {
+            imageList.forEach(filename => {
+                const img = new Image();
+                img.src = `${folder}/${filename}`;
+            });
+        }
+
         (function() {
             const FOLDER = 'engagement';
             // List of images as provided in source
             let images = ['2B5A0788.webp', '2B5A1340.webp', '2B5A1614.webp', '2B5A1701.webp', '2B5A1705.webp', '2B5A1711.webp', '2B5A1802.webp', '2B5A1814.webp', '2B5A2005.webp', '2B5A6757.webp', '2B5A6998.webp', '2B5A7014.webp', '2B5A7046.webp', '2B5A7053.webp', '2B5A7116.webp', '2B5A7729.webp', '2B5A7737.webp', 'DSC00794.webp', 'DSC00909.webp', 'DSC00937 copy.webp', 'DSC00944.webp', 'DSC00946 copy.webp', 'DSC00959.webp', 'DSC01219 copy.webp', 'DSC01224.webp', 'DSC01236 copy.webp', 'DSC01237.webp', 'DSC01262.webp', 'DSC02102.webp', 'DSC02125.webp', 'DSC02144.webp', 'DSC02244.webp', 'DSC02482.webp', 'DSC03816.webp', 'DSC04770.webp', '_DSC4024 copy.webp', '_DSC4048 copy.webp', '_DSC4050 copy_pp copy.webp', '_DSC4089 copy.webp', '_DSC4127 copy.webp', 'ś.webp'];
+            
+            // Start preloading images immediately
+            preloadImages(images, FOLDER);
             
             // Shuffle images using Fisher-Yates algorithm
             for (let i = images.length - 1; i > 0; i--) {
