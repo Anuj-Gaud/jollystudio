@@ -409,6 +409,58 @@
         .contact-icon { width: 55px; height: 55px; background: var(--bg-cream); border: 1px solid var(--primary-burgundy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-burgundy); font-size: 1.3rem; margin-right: 20px; }
         .form-control { width: 100%; padding: 20px; border: 1px solid #e0d0b8; background-color: var(--white); font-family: 'Playfair Display', serif; margin-bottom: 25px; border-radius: 4px; font-size: 1.05rem; }
         
+        /* Consent Checkbox Styles */
+        .consent-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #faf5f0;
+            border: 1px solid #e0d0b8;
+            border-radius: 4px;
+        }
+
+        .consent-checkbox {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-top: 3px;
+            accent-color: var(--primary-burgundy);
+            cursor: pointer;
+        }
+
+        .consent-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            line-height: 1.6;
+        }
+
+        .consent-label a {
+            color: var(--primary-burgundy);
+            font-weight: 600;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+
+        .consent-label a:hover {
+            color: var(--primary-gold);
+        }
+
+        .error-message {
+            color: #c53030;
+            font-size: 0.9rem;
+            margin-top: -20px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+        
         .float-wa { position: fixed; width: 65px; height: 65px; bottom: 35px; right: 35px; background-color: var(--primary-burgundy); color: var(--white); border-radius: 50%; font-size: 32px; box-shadow: 0 5px 20px rgba(74, 14, 18, 0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; border: 2px solid var(--primary-gold); }
 
         /* --- RESPONSIVE DESIGN --- */
@@ -570,6 +622,13 @@
                 padding: 12px; 
                 font-size: 1rem; 
                 margin-bottom: 15px;
+            }
+            .consent-wrapper {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            .consent-label {
+                font-size: 0.9rem;
             }
             .btn { 
                 padding: 12px 30px; 
@@ -1028,6 +1087,16 @@
                             <option value="FrameWork">FrameWork</option>
                         </select>
                         <textarea id="message" class="form-control" rows="4" placeholder="Tell us about your event..."></textarea>
+                        
+                        <!-- Consent Checkbox -->
+                        <div class="consent-wrapper">
+                            <input type="checkbox" id="consent" class="consent-checkbox" required>
+                            <label for="consent" class="consent-label">
+                                I agree to the <a href="terms-and-conditions.html" target="_blank">Terms & Conditions</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a> and I am giving my consent to receive updates through SMS/Email.
+                            </label>
+                        </div>
+                        <div class="error-message" id="consentError">Please agree to the Terms & Conditions and Privacy Policy</div>
+                        
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Send Enquiry</button>
                     </form>
                 </div>
@@ -1219,13 +1288,24 @@
                 form.addEventListener('submit', function(e){
                     e.preventDefault();
                     const name = document.getElementById('name').value.trim();
-                    const email = document.getElementById('email').value.trim();
+                    const email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
                     const service = document.getElementById('serviceType').value;
                     const message = document.getElementById('message').value.trim();
-                    if (!name || !email) {
-                        alert('Please enter name and email.');
+                    const consent = document.getElementById('consent').checked;
+                    const consentError = document.getElementById('consentError');
+                    
+                    if (!name || !message) {
+                        alert('Please enter your name and event details.');
                         return;
                     }
+
+                    if (!consent) {
+                        consentError.classList.add('show');
+                        return;
+                    } else {
+                        consentError.classList.remove('show');
+                    }
+
                     const btn = form.querySelector('button[type="submit"]');
                     const original = btn.innerHTML;
                     btn.innerHTML = 'Preparing...'; btn.disabled = true;
