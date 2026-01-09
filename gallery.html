@@ -131,6 +131,19 @@
             font-weight: 700; /* Bold font preserved */
         }
 
+        .close-btn { 
+            position: absolute; top: 20px; right: 20px; 
+            cursor: pointer; font-size: 1.5rem; color: var(--white);
+            background: var(--primary-burgundy); border: none; padding: 8px 12px;
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .close-btn:hover {
+            background: var(--primary-gold); color: var(--primary-burgundy);
+            transform: rotate(90deg);
+        }
+
         /* --- MASONRY GRID (Fixed Container Issue) --- */
         .photo-grid { 
             columns: 3;
@@ -221,6 +234,28 @@
             border-radius: 8px; 
         }
 
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 3010;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
         .lightbox-nav-btn {
             position: absolute; 
             top: 50%; 
@@ -288,7 +323,7 @@
     </div>
 
     <div class="side-menu">
-        <button onclick="toggleSideMenu()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; color: var(--primary-burgundy); cursor: pointer;">
+        <button class="close-btn" onclick="toggleSideMenu()">
             <i class="fas fa-times"></i>
         </button>
         <div class="side-menu-logo"><img src="logo.png" alt="JollyStudio"></div>
